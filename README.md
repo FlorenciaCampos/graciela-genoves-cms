@@ -19,7 +19,7 @@ Permitir que la artista pueda administrar su sitio web sin conocimientos técnic
 
 - Node.js
 - Express
-- SQLite
+- Supabase
 
 ### Frontend
 
