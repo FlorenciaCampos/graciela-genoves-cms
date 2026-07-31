@@ -7,9 +7,13 @@ import {
   optimizeImage,
   uploadOriginalImage,
   uploadOptimizedImage,
+  deleteImages,
 } from "../services/image.service.js";
 
 export const createArtwork = async (req, res) => {
+  let originalImage = null;
+  let optimizedImage = null;
+
   try {
     if (!req.file) {
       return res.status(400).json({
@@ -28,10 +32,18 @@ export const createArtwork = async (req, res) => {
       is_visible,
     } = req.body;
 
-    if (!title || !category_id) {
+    if (
+      !title ||
+      !year ||
+      !technique ||
+      !dimensions ||
+      !category_id ||
+      order_index === undefined
+    ) {
       return res.status(400).json({
         success: false,
-        message: "El título y la categoría son obligatorios.",
+        message:
+          "Título, año, técnica, medidas, categoría y orden son obligatorios.",
       });
     }
 
@@ -39,12 +51,9 @@ export const createArtwork = async (req, res) => {
 
     const optimizedBuffer = await optimizeImage(req.file.buffer);
 
-    const originalImage = await uploadOriginalImage(
-      req.file,
-      artworkId
-    );
+    originalImage = await uploadOriginalImage(req.file, artworkId);
 
-    const optimizedImage = await uploadOptimizedImage(
+    optimizedImage = await uploadOptimizedImage(
       optimizedBuffer,
       artworkId
     );
@@ -52,13 +61,13 @@ export const createArtwork = async (req, res) => {
     const artworkData = {
       id: artworkId,
       title,
-      year: year ? Number(year) : null,
-      technique: technique || null,
-      dimensions: dimensions || null,
+      year: Number(year),
+      technique,
+      dimensions,
       category_id,
       original_image_url: originalImage.url,
       optimized_image_url: optimizedImage.url,
-      order_index: order_index ? Number(order_index) : 0,
+      order_index: Number(order_index),
       is_visible:
         is_visible === undefined
           ? true
@@ -73,6 +82,18 @@ export const createArtwork = async (req, res) => {
       data: artwork,
     });
   } catch (error) {
+    try {
+      await deleteImages([
+        originalImage?.path,
+        optimizedImage?.path,
+      ]);
+    } catch (cleanupError) {
+      console.error(
+        "No se pudieron limpiar las imágenes:",
+        cleanupError.message
+      );
+    }
+
     return res.status(500).json({
       success: false,
       message: error.message,

@@ -103,8 +103,27 @@ const uploadOptimizedImage = async (optimizedBuffer, artworkId) => {
   };
 };
 
+const deleteImages = async (paths) => {
+  const validPaths = paths.filter(Boolean);
+
+  if (validPaths.length === 0) {
+    return;
+  }
+
+  const { error } = await supabase.storage
+    .from(BUCKET_NAME)
+    .remove(validPaths);
+
+  if (error) {
+    throw new Error(
+      `No se pudieron eliminar las imágenes: ${error.message}`
+    );
+  }
+};
+
 export {
   optimizeImage,
   uploadOriginalImage,
   uploadOptimizedImage,
+  deleteImages,
 };
