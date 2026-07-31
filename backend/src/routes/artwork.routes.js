@@ -8,6 +8,7 @@ import {
   createArtwork,
   getAllArtworks,
   getArtworkById,
+  updateArtwork,
 } from "../controllers/artwork.controller.js";
 
 const router = Router();
@@ -16,5 +17,11 @@ router.post("/", upload.single("image"), createArtwork);
 
 router.get("/", getAllArtworks);
 router.get("/:id", getArtworkById);
+
+router.put(
+  "/:id",
+  upload.single("image"),
+  updateArtwork
+);
 
 export default router;

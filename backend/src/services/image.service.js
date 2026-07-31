@@ -16,7 +16,7 @@ const getExtensionFromMimeType = (mimeType) => {
 };
 
 const optimizeImage = async (buffer) => {
-  const optimizedBuffer = await sharp(buffer)
+  return await sharp(buffer)
     .resize({
       width: 1600,
       withoutEnlargement: true,
@@ -25,17 +25,15 @@ const optimizeImage = async (buffer) => {
       quality: 80,
     })
     .toBuffer();
-
-  return optimizedBuffer;
 };
 
-const uploadOriginalImage = async (file, artworkId) => {
+const uploadOriginalImage = async (file, imageId) => {
   if (!file) {
     throw new Error("No se recibió ninguna imagen.");
   }
 
-  if (!artworkId) {
-    throw new Error("Falta el identificador de la obra.");
+  if (!imageId) {
+    throw new Error("Falta el identificador de la imagen.");
   }
 
   const extension = getExtensionFromMimeType(file.mimetype);
@@ -46,7 +44,7 @@ const uploadOriginalImage = async (file, artworkId) => {
     );
   }
 
-  const originalPath = `originals/${artworkId}.${extension}`;
+  const originalPath = `originals/${imageId}.${extension}`;
 
   const { error } = await supabase.storage
     .from(BUCKET_NAME)
@@ -56,7 +54,9 @@ const uploadOriginalImage = async (file, artworkId) => {
     });
 
   if (error) {
-    throw new Error(`No se pudo subir la imagen original: ${error.message}`);
+    throw new Error(
+      `No se pudo subir la imagen original: ${error.message}`
+    );
   }
 
   const { data } = supabase.storage
@@ -69,16 +69,19 @@ const uploadOriginalImage = async (file, artworkId) => {
   };
 };
 
-const uploadOptimizedImage = async (optimizedBuffer, artworkId) => {
+const uploadOptimizedImage = async (
+  optimizedBuffer,
+  imageId
+) => {
   if (!optimizedBuffer) {
     throw new Error("No se recibió la imagen optimizada.");
   }
 
-  if (!artworkId) {
-    throw new Error("Falta el identificador de la obra.");
+  if (!imageId) {
+    throw new Error("Falta el identificador de la imagen.");
   }
 
-  const optimizedPath = `optimized/${artworkId}.webp`;
+  const optimizedPath = `optimized/${imageId}.webp`;
 
   const { error } = await supabase.storage
     .from(BUCKET_NAME)
@@ -103,8 +106,31 @@ const uploadOptimizedImage = async (optimizedBuffer, artworkId) => {
   };
 };
 
+const getStoragePathFromPublicUrl = (publicUrl) => {
+  if (!publicUrl) {
+    return null;
+  }
+
+  const marker = `/storage/v1/object/public/${BUCKET_NAME}/`;
+  const markerIndex = publicUrl.indexOf(marker);
+
+  if (markerIndex === -1) {
+    return null;
+  }
+
+  const encodedPath = publicUrl.slice(
+    markerIndex + marker.length
+  );
+
+  try {
+    return decodeURIComponent(encodedPath);
+  } catch {
+    return encodedPath;
+  }
+};
+
 const deleteImages = async (paths) => {
-  const validPaths = paths.filter(Boolean);
+  const validPaths = [...new Set(paths.filter(Boolean))];
 
   if (validPaths.length === 0) {
     return;
@@ -125,5 +151,6 @@ export {
   optimizeImage,
   uploadOriginalImage,
   uploadOptimizedImage,
+  getStoragePathFromPublicUrl,
   deleteImages,
 };

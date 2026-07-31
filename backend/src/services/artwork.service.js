@@ -13,3 +13,7 @@ export const getAllArtworks = async () => {
 export const getArtworkById = async (id) => {
   return await artworkModel.getArtworkById(id);
 };
+
+export const updateArtwork = async (id, artworkData) => {
+  return await artworkModel.updateArtwork(id, artworkData);
+};
