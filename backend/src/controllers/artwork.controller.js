@@ -1,26 +1,76 @@
 // src/controllers/artwork.controller.js
 
+import { randomUUID } from "crypto";
 import * as artworkService from "../services/artwork.service.js";
+
+import {
+  optimizeImage,
+  uploadOriginalImage,
+  uploadOptimizedImage,
+} from "../services/image.service.js";
 
 export const createArtwork = async (req, res) => {
   try {
-    console.log("DATOS RECIBIDOS:");
-    console.log(req.body);
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Tenés que enviar una imagen.",
+      });
+    }
 
-    console.log("ARCHIVO RECIBIDO:");
-    console.log(req.file);
+    const {
+      title,
+      year,
+      technique,
+      dimensions,
+      category_id,
+      order_index,
+      is_visible,
+    } = req.body;
 
-    return res.status(200).json({
+    if (!title || !category_id) {
+      return res.status(400).json({
+        success: false,
+        message: "El título y la categoría son obligatorios.",
+      });
+    }
+
+    const artworkId = randomUUID();
+
+    const optimizedBuffer = await optimizeImage(req.file.buffer);
+
+    const originalImage = await uploadOriginalImage(
+      req.file,
+      artworkId
+    );
+
+    const optimizedImage = await uploadOptimizedImage(
+      optimizedBuffer,
+      artworkId
+    );
+
+    const artworkData = {
+      id: artworkId,
+      title,
+      year: year ? Number(year) : null,
+      technique: technique || null,
+      dimensions: dimensions || null,
+      category_id,
+      original_image_url: originalImage.url,
+      optimized_image_url: optimizedImage.url,
+      order_index: order_index ? Number(order_index) : 0,
+      is_visible:
+        is_visible === undefined
+          ? true
+          : is_visible === "true" || is_visible === true,
+    };
+
+    const artwork = await artworkService.createArtwork(artworkData);
+
+    return res.status(201).json({
       success: true,
-      message: "Multer recibió correctamente la petición.",
-      body: req.body,
-      file: req.file
-        ? {
-            originalname: req.file.originalname,
-            mimetype: req.file.mimetype,
-            size: req.file.size,
-          }
-        : null,
+      message: "Obra creada correctamente.",
+      data: artwork,
     });
   } catch (error) {
     return res.status(500).json({

@@ -1,5 +1,6 @@
 // src/services/image.service.js
 
+import sharp from "sharp";
 import { supabase } from "../config/supabase.js";
 
 const BUCKET_NAME = "artworks";
@@ -12,6 +13,20 @@ const getExtensionFromMimeType = (mimeType) => {
   };
 
   return extensions[mimeType];
+};
+
+const optimizeImage = async (buffer) => {
+  const optimizedBuffer = await sharp(buffer)
+    .resize({
+      width: 1600,
+      withoutEnlargement: true,
+    })
+    .webp({
+      quality: 80,
+    })
+    .toBuffer();
+
+  return optimizedBuffer;
 };
 
 const uploadOriginalImage = async (file, artworkId) => {
@@ -52,4 +67,44 @@ const uploadOriginalImage = async (file, artworkId) => {
     path: originalPath,
     url: data.publicUrl,
   };
+};
+
+const uploadOptimizedImage = async (optimizedBuffer, artworkId) => {
+  if (!optimizedBuffer) {
+    throw new Error("No se recibió la imagen optimizada.");
+  }
+
+  if (!artworkId) {
+    throw new Error("Falta el identificador de la obra.");
+  }
+
+  const optimizedPath = `optimized/${artworkId}.webp`;
+
+  const { error } = await supabase.storage
+    .from(BUCKET_NAME)
+    .upload(optimizedPath, optimizedBuffer, {
+      contentType: "image/webp",
+      upsert: false,
+    });
+
+  if (error) {
+    throw new Error(
+      `No se pudo subir la imagen optimizada: ${error.message}`
+    );
+  }
+
+  const { data } = supabase.storage
+    .from(BUCKET_NAME)
+    .getPublicUrl(optimizedPath);
+
+  return {
+    path: optimizedPath,
+    url: data.publicUrl,
+  };
+};
+
+export {
+  optimizeImage,
+  uploadOriginalImage,
+  uploadOptimizedImage,
 };
