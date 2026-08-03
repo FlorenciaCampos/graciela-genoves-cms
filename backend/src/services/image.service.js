@@ -1,7 +1,7 @@
 // src/services/image.service.js
 
 import sharp from "sharp";
-import { supabase } from "../config/supabase.js";
+import { supabaseAdmin } from "../config/supabase.js";
 
 const BUCKET_NAME = "artworks";
 
@@ -46,7 +46,7 @@ const uploadOriginalImage = async (file, imageId) => {
 
   const originalPath = `originals/${imageId}.${extension}`;
 
-  const { error } = await supabase.storage
+  const { error } = await supabaseAdmin.storage
     .from(BUCKET_NAME)
     .upload(originalPath, file.buffer, {
       contentType: file.mimetype,
@@ -54,12 +54,14 @@ const uploadOriginalImage = async (file, imageId) => {
     });
 
   if (error) {
+    console.error("Error completo al subir imagen original:", error);
+
     throw new Error(
       `No se pudo subir la imagen original: ${error.message}`
     );
   }
 
-  const { data } = supabase.storage
+  const { data } = supabaseAdmin.storage
     .from(BUCKET_NAME)
     .getPublicUrl(originalPath);
 
@@ -83,7 +85,7 @@ const uploadOptimizedImage = async (
 
   const optimizedPath = `optimized/${imageId}.webp`;
 
-  const { error } = await supabase.storage
+  const { error } = await supabaseAdmin.storage
     .from(BUCKET_NAME)
     .upload(optimizedPath, optimizedBuffer, {
       contentType: "image/webp",
@@ -91,12 +93,14 @@ const uploadOptimizedImage = async (
     });
 
   if (error) {
+    console.error("Error completo al subir imagen optimizada:", error);
+
     throw new Error(
       `No se pudo subir la imagen optimizada: ${error.message}`
     );
   }
 
-  const { data } = supabase.storage
+  const { data } = supabaseAdmin.storage
     .from(BUCKET_NAME)
     .getPublicUrl(optimizedPath);
 
@@ -136,11 +140,13 @@ const deleteImages = async (paths) => {
     return;
   }
 
-  const { error } = await supabase.storage
+  const { error } = await supabaseAdmin.storage
     .from(BUCKET_NAME)
     .remove(validPaths);
 
   if (error) {
+    console.error("Error completo al eliminar imágenes:", error);
+
     throw new Error(
       `No se pudieron eliminar las imágenes: ${error.message}`
     );

@@ -1,4 +1,5 @@
 // src/routes/artwork.routes.js
+import { authenticate } from "../auth/auth.middleware.js";
 
 import { Router } from "express";
 
@@ -13,8 +14,12 @@ import {
 
 const router = Router();
 
-router.post("/", upload.single("image"), createArtwork);
-
+router.post(
+    "/",
+    authenticate,
+    upload.single("image"),
+    createArtwork
+  );
 router.get("/", getAllArtworks);
 router.get("/:id", getArtworkById);
 

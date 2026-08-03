@@ -1,9 +1,9 @@
 // src/models/artwork.model.js
 
-import { supabase } from "../config/supabase.js";
+import { supabaseAdmin } from "../config/supabase.js";
 
 export const createArtwork = async (artworkData) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("artworks")
     .insert(artworkData)
     .select()
@@ -17,7 +17,7 @@ export const createArtwork = async (artworkData) => {
 };
 
 export const getAllArtworks = async () => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("artworks")
     .select("*")
     .order("created_at", { ascending: false });
@@ -30,7 +30,7 @@ export const getAllArtworks = async () => {
 };
 
 export const getArtworkById = async (id) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("artworks")
     .select("*")
     .eq("id", id)
@@ -50,7 +50,7 @@ export const getArtworkById = async (id) => {
 };
 
 export const updateArtwork = async (id, artworkData) => {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from("artworks")
     .update(artworkData)
     .eq("id", id)
@@ -65,7 +65,7 @@ export const updateArtwork = async (id, artworkData) => {
 };
 
 export const deleteArtwork = async (id) => {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from("artworks")
     .delete()
     .eq("id", id);
