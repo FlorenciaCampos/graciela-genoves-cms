@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import HomeLayout from '../layouts/HomeLayout';
 
 import Home from '../pages/Home';
 import Oleos from '../pages/Oleos';
@@ -8,10 +9,15 @@ import Bio from '../pages/Bio';
 import Contacto from '../pages/Contacto';
 
 export const appRouter = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />,
-  },
+    {
+        element: <HomeLayout />,
+        children: [
+          {
+            path: '/',
+            element: <Home />,
+          },
+        ],
+      },
   {
     path: '/oleos',
     element: <Oleos />,
