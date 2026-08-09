@@ -12,7 +12,7 @@ function Home() {
 
       <div className="home__interface">
         <header className="home__header">
-          <h1 className="home__name">graciela genovés</h1>
+          <h1 className="home__name">Graciela Genovés</h1>
 
           <nav className="home__nav">
             <a href="/oleos">obras</a>
