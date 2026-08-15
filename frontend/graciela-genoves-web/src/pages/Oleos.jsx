@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 
 import { getArtworks } from "../services/api";
+import firmaNegra from "../assets/firma-negra.png";
 import "../styles/Oleos.css";
 
 function Oleos() {
@@ -78,8 +79,16 @@ function Oleos() {
   return (
     <div className="oleos">
       <header className="oleos__header">
-        <Link to="/" className="oleos__name">
-          Graciela Genovés
+        <Link
+          to="/"
+          className="oleos__signature-link"
+          aria-label="Graciela Genovés"
+        >
+          <img
+            className="oleos__signature"
+            src={firmaNegra}
+            alt="Graciela Genovés"
+          />
         </Link>
 
         <nav className="oleos__nav">
@@ -112,33 +121,22 @@ function Oleos() {
       </header>
 
       <main className="oleos__content">
-        <section className="oleos__list">
+        <section className="oleos__grid">
           {artworks.map((artwork, index) => (
             <article className="oleos__artwork" key={artwork.id}>
               <button
                 className="oleos__image-button"
                 type="button"
                 onClick={() => openCarousel(index)}
+                aria-label={`Ver ${artwork.title}`}
               >
                 <img
                   className="oleos__image"
                   src={artwork.optimized_image_url}
                   alt={artwork.title}
+                  loading="lazy"
                 />
               </button>
-
-              <div className="oleos__info">
-                <button
-                  className="oleos__title-button"
-                  type="button"
-                  onClick={() => openCarousel(index)}
-                >
-                  {artwork.title}
-                </button>
-
-                <p>{artwork.year}</p>
-                <p>{artwork.technique}</p>
-              </div>
             </article>
           ))}
         </section>
@@ -219,8 +217,16 @@ function Oleos() {
 
             <div className="oleos__lightbox-info">
               <p>{selectedArtwork.title}</p>
-              <p>{selectedArtwork.year}</p>
-              <p>{selectedArtwork.technique}</p>
+
+              {selectedArtwork.year && <p>{selectedArtwork.year}</p>}
+
+              {selectedArtwork.technique && (
+                <p>{selectedArtwork.technique}</p>
+              )}
+
+              {selectedArtwork.dimensions && (
+                <p>{selectedArtwork.dimensions}</p>
+              )}
             </div>
           </div>
 

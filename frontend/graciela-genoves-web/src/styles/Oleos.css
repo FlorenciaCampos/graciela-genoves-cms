@@ -1,7 +1,9 @@
 .oleos {
     min-height: 100vh;
+  
     background: #fff;
     color: #303030;
+  
     font-family: Arial, Helvetica, sans-serif;
   }
   
@@ -9,6 +11,7 @@
   
   .oleos__header {
     position: fixed;
+  
     top: 34px;
     left: 24px;
   
@@ -19,17 +22,21 @@
     z-index: 10;
   }
   
-  .oleos__name {
-    margin: 0 0 38px;
+  .oleos__signature-link {
+    display: block;
+  
+    margin-left: -14px;
+    margin-bottom: 32px;
   
     color: inherit;
     text-decoration: none;
+  }
   
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1;
+  .oleos__signature {
+    display: block;
   
-    white-space: nowrap;
+    width: 130px;
+    height: auto;
   }
   
   .oleos__nav {
@@ -80,6 +87,7 @@
   
     max-height: 0;
     margin-left: 12px;
+  
     overflow: hidden;
   
     opacity: 0;
@@ -111,32 +119,36 @@
     opacity: 1;
   }
   
-  /* OBRAS */
+  /* MOSAICO DE OBRAS */
   
   .oleos__content {
     margin-left: 190px;
-    padding: 55px 40px 70px;
+  
+    padding: 55px 45px 80px;
   }
   
-  .oleos__list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  
-    gap: 40px;
+  .oleos__grid {
+    column-count: 3;
+    column-gap: 38px;
   }
   
   .oleos__artwork {
-    width: 100%;
+    display: inline-block;
   
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    margin: 0 0 38px;
+  
+    break-inside: avoid;
   }
   
   .oleos__image-button {
+    display: block;
+  
+    width: 100%;
+  
     padding: 0;
     border: 0;
+  
     background: none;
   
     cursor: pointer;
@@ -145,54 +157,22 @@
   .oleos__image {
     display: block;
   
-    width: auto;
+    width: 100%;
     height: auto;
   
-    max-width: calc(100vw - 270px);
-    max-height: 88vh;
-  
-    object-fit: contain;
+    transition:
+      opacity 0.25s ease,
+      transform 0.3s ease;
   }
   
-  /* INFORMACIÓN */
-  
-  .oleos__info {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .oleos__title-button {
-    margin: 0 0 3px;
-    padding: 0;
-  
-    border: 0;
-    background: none;
-  
-    color: inherit;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 400;
-  
-    cursor: pointer;
-  
-    transition: opacity 0.2s ease;
-  }
-  
-  .oleos__title-button:hover {
-    opacity: 0.6;
-  }
-  
-  .oleos__info p {
-    margin: 2px 0;
-  
-    font-size: 12px;
-    font-weight: 400;
+  .oleos__image-button:hover .oleos__image {
+    opacity: 0.88;
   }
   
   /* FOOTER */
   
   .oleos__footer {
-    padding: 50px 24px 30px;
+    padding: 40px 24px 30px;
   
     display: flex;
     justify-content: space-between;
@@ -268,18 +248,18 @@
     height: auto;
   
     max-width: 100%;
-    max-height: 82vh;
+    max-height: 78vh;
   
     object-fit: contain;
   }
   
   .oleos__lightbox-info {
-    margin-top: 10px;
+    margin-top: 12px;
   
     text-align: center;
   
     font-size: 12px;
-    line-height: 1.4;
+    line-height: 1.45;
   }
   
   .oleos__lightbox-info p {
@@ -288,6 +268,7 @@
   
   .oleos__close {
     position: absolute;
+  
     top: 22px;
     right: 25px;
   
@@ -297,6 +278,7 @@
     background: none;
   
     color: #303030;
+  
     font-family: inherit;
     font-size: 28px;
     font-weight: 300;
@@ -312,6 +294,7 @@
   
   .oleos__arrow {
     position: absolute;
+  
     top: 50%;
   
     padding: 10px;
@@ -320,6 +303,7 @@
     background: none;
   
     color: #303030;
+  
     font-family: inherit;
     font-size: 26px;
     font-weight: 300;
@@ -343,20 +327,45 @@
     right: 25px;
   }
   
+  /* TABLET */
+  
+  @media (max-width: 1100px) {
+    .oleos__content {
+      margin-left: 175px;
+  
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+  
+    .oleos__grid {
+      column-count: 2;
+      column-gap: 30px;
+    }
+  
+    .oleos__artwork {
+      margin-bottom: 30px;
+    }
+  }
+  
   /* CELULAR */
   
   @media (max-width: 768px) {
     .oleos__header {
       position: relative;
+  
       top: auto;
       left: auto;
   
       padding: 24px 20px 10px;
     }
   
-    .oleos__name {
-      margin-bottom: 28px;
-      font-size: 16px;
+    .oleos__signature-link {
+      margin-left: -10px;
+      margin-bottom: 26px;
+    }
+  
+    .oleos__signature {
+      width: 120px;
     }
   
     .oleos__nav {
@@ -374,24 +383,21 @@
   
     .oleos__content {
       margin-left: 0;
-      padding: 25px 20px 50px;
+  
+      padding: 35px 20px 50px;
     }
   
-    .oleos__list {
-      gap: 40px;
+    .oleos__grid {
+      column-count: 1;
     }
   
-    .oleos__image {
-      max-width: 100%;
-      max-height: 82vh;
-    }
-  
-    .oleos__info {
-      margin-top: 8px;
+    .oleos__artwork {
+      margin-bottom: 28px;
     }
   
     .oleos__footer {
       margin-left: 0;
+  
       padding: 30px 20px;
   
       gap: 20px;
@@ -416,15 +422,18 @@
   
     .oleos__lightbox-image {
       max-width: 100%;
-      max-height: 75vh;
+      max-height: 70vh;
     }
   
     .oleos__lightbox-info {
+      margin-top: 10px;
+  
       font-size: 11px;
     }
   
     .oleos__arrow {
       padding: 5px;
+  
       font-size: 22px;
     }
   

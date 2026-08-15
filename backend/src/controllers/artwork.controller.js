@@ -5,8 +5,10 @@ import * as artworkService from "../services/artwork.service.js";
 
 import {
   optimizeImage,
+  createThumbnail,
   uploadOriginalImage,
   uploadOptimizedImage,
+  uploadThumbnailImage,
   deleteImages,
   getStoragePathFromPublicUrl,
 } from "../services/image.service.js";
@@ -14,6 +16,7 @@ import {
 export const createArtwork = async (req, res) => {
   let originalImage = null;
   let optimizedImage = null;
+  let thumbnailImage = null;
 
   try {
     if (!req.file) {
@@ -50,9 +53,11 @@ export const createArtwork = async (req, res) => {
 
     const artworkId = randomUUID();
 
-    const optimizedBuffer = await optimizeImage(
-      req.file.buffer
-    );
+    const [optimizedBuffer, thumbnailBuffer] =
+      await Promise.all([
+        optimizeImage(req.file.buffer),
+        createThumbnail(req.file.buffer),
+      ]);
 
     originalImage = await uploadOriginalImage(
       req.file,
@@ -61,6 +66,11 @@ export const createArtwork = async (req, res) => {
 
     optimizedImage = await uploadOptimizedImage(
       optimizedBuffer,
+      artworkId
+    );
+
+    thumbnailImage = await uploadThumbnailImage(
+      thumbnailBuffer,
       artworkId
     );
 
@@ -73,6 +83,7 @@ export const createArtwork = async (req, res) => {
       category_id,
       original_image_url: originalImage.url,
       optimized_image_url: optimizedImage.url,
+      thumbnail_image_url: thumbnailImage.url,
       order_index: Number(order_index),
       is_visible:
         is_visible === undefined
@@ -96,6 +107,7 @@ export const createArtwork = async (req, res) => {
       await deleteImages([
         originalImage?.path,
         optimizedImage?.path,
+        thumbnailImage?.path,
       ]);
     } catch (cleanupError) {
       console.error(
@@ -166,6 +178,7 @@ export const updateArtwork = async (
 ) => {
   let newOriginalImage = null;
   let newOptimizedImage = null;
+  let newThumbnailImage = null;
 
   try {
     const { id } = req.params;
@@ -301,8 +314,11 @@ export const updateArtwork = async (
       const replacementImageId =
         `${id}-${randomUUID()}`;
 
-      const optimizedBuffer =
-        await optimizeImage(req.file.buffer);
+      const [optimizedBuffer, thumbnailBuffer] =
+        await Promise.all([
+          optimizeImage(req.file.buffer),
+          createThumbnail(req.file.buffer),
+        ]);
 
       newOriginalImage =
         await uploadOriginalImage(
@@ -316,11 +332,20 @@ export const updateArtwork = async (
           replacementImageId
         );
 
+      newThumbnailImage =
+        await uploadThumbnailImage(
+          thumbnailBuffer,
+          replacementImageId
+        );
+
       artworkData.original_image_url =
         newOriginalImage.url;
 
       artworkData.optimized_image_url =
         newOptimizedImage.url;
+
+      artworkData.thumbnail_image_url =
+        newThumbnailImage.url;
     }
 
     if (
@@ -347,6 +372,9 @@ export const updateArtwork = async (
         getStoragePathFromPublicUrl(
           currentArtwork.optimized_image_url
         ),
+        getStoragePathFromPublicUrl(
+          currentArtwork.thumbnail_image_url
+        ),
       ];
 
       try {
@@ -370,6 +398,7 @@ export const updateArtwork = async (
       await deleteImages([
         newOriginalImage?.path,
         newOptimizedImage?.path,
+        newThumbnailImage?.path,
       ]);
     } catch (cleanupError) {
       console.error(

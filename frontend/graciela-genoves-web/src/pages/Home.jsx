@@ -6,6 +6,7 @@ import {
 } from "react-icons/fa";
 
 import homeImage from "../assets/home.jpg";
+import firma from "../assets/firma.png";
 import "./Home.css";
 
 function Home() {
@@ -19,20 +20,24 @@ function Home() {
 
       <div className="home__interface">
         <header className="home__header">
-          <h1 className="home__name">Graciela Genovés</h1>
+          <img
+            className="home__signature"
+            src={firma}
+            alt="Graciela Genovés"
+          />
 
           <nav className="home__nav">
             <div className="home__nav-group">
-              <span className="home__nav-label">obras</span>
+              <span className="home__nav-label">Obras</span>
 
               <div className="home__submenu">
-                <Link to="/oleos">óleos</Link>
-                <Link to="/acuarelas">acuarelas</Link>
+                <Link to="/oleos">Óleos</Link>
+                <Link to="/acuarelas">Acuarelas</Link>
               </div>
             </div>
 
             <div className="home__nav-group">
-              <span className="home__nav-label">exhibiciones</span>
+              <span className="home__nav-label">Exhibiciones</span>
 
               <div className="home__submenu">
                 <a href="#">Tonal</a>
@@ -46,7 +51,7 @@ function Home() {
 
             <Link to="/bio">bio</Link>
             <a href="#">c.v.</a>
-            <Link to="/contacto">contacto</Link>
+            <Link to="/contacto">Contacto</Link>
           </nav>
         </header>
 
