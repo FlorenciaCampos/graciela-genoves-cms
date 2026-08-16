@@ -123,13 +123,12 @@ export const createArtwork = async (req, res) => {
   }
 };
 
-export const getAllArtworks = async (
-  req,
-  res
-) => {
+export const getAllArtworks = async (req, res) => {
   try {
+    const { category } = req.query;
+
     const artworks =
-      await artworkService.getAllArtworks();
+      await artworkService.getAllArtworks(category);
 
     return res.status(200).json({
       success: true,

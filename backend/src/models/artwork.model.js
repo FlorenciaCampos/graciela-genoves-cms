@@ -16,11 +16,25 @@ export const createArtwork = async (artworkData) => {
   return data;
 };
 
-export const getAllArtworks = async () => {
-  const { data, error } = await supabaseAdmin
+export const getAllArtworks = async (category) => {
+  let query = supabaseAdmin
     .from("artworks")
-    .select("*")
+    .select(`
+      *,
+      category:categories!inner(slug)
+    `)
+    .eq("is_visible", true)
+    .order("order_index", {
+      ascending: true,
+      nullsFirst: false,
+    })
     .order("created_at", { ascending: false });
+
+  if (category) {
+    query = query.eq("categories.slug", category);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(error.message);

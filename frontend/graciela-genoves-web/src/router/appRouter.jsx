@@ -1,21 +1,20 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter } from "react-router-dom";
 
-import HomeLayout from '../layouts/HomeLayout';
-import MainLayout from '../layouts/MainLayout';
+import HomeLayout from "../layouts/HomeLayout";
+import MainLayout from "../layouts/MainLayout";
 
-import Home from '../pages/Home';
-import Oleos from '../pages/Oleos';
-import Acuarelas from '../pages/Acuarelas';
-import Exhibiciones from '../pages/Exhibiciones';
-import Bio from '../pages/Bio';
-import Contacto from '../pages/Contacto';
+import Home from "../pages/Home";
+import ArtworksPage from "../pages/ArtworksPage";
+import Exhibiciones from "../pages/Exhibiciones";
+import Bio from "../pages/Bio";
+import Contacto from "../pages/Contacto";
 
 export const appRouter = createBrowserRouter([
   {
     element: <HomeLayout />,
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
     ],
@@ -24,23 +23,23 @@ export const appRouter = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: '/oleos',
-        element: <Oleos />,
+        path: "/oleos",
+        element: <ArtworksPage category="oleos" />,
       },
       {
-        path: '/acuarelas',
-        element: <Acuarelas />,
+        path: "/acuarelas",
+        element: <ArtworksPage category="acuarelas" />,
       },
       {
-        path: '/exhibiciones',
+        path: "/exhibiciones",
         element: <Exhibiciones />,
       },
       {
-        path: '/bio',
+        path: "/bio",
         element: <Bio />,
       },
       {
-        path: '/contacto',
+        path: "/contacto",
         element: <Contacto />,
       },
     ],
