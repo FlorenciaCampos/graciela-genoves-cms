@@ -1,0 +1,216 @@
+/* MOSAICO DE OBRAS */
+
+.artwork-gallery {
+    column-count: 3;
+    column-gap: 38px;
+  }
+  
+  .artwork-gallery__artwork {
+    display: inline-block;
+  
+    width: 100%;
+    margin: 0 0 38px;
+  
+    break-inside: avoid;
+  }
+  
+  .artwork-gallery__image-button {
+    display: block;
+  
+    width: 100%;
+  
+    padding: 0;
+    border: 0;
+  
+    background: none;
+  
+    cursor: pointer;
+  }
+  
+  .artwork-gallery__image {
+    display: block;
+  
+    width: 100%;
+    height: auto;
+  
+    transition:
+      opacity 0.25s ease,
+      transform 0.3s ease;
+  }
+  
+  .artwork-gallery__image-button:hover .artwork-gallery__image {
+    opacity: 0.88;
+  }
+  
+  /* CARRUSEL / LIGHTBOX */
+  
+  .artwork-gallery__lightbox {
+    position: fixed;
+    inset: 0;
+  
+    z-index: 1000;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    background: rgba(255, 255, 255, 0.98);
+  }
+  
+  .artwork-gallery__lightbox-content {
+    width: calc(100vw - 180px);
+    height: calc(100vh - 80px);
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .artwork-gallery__lightbox-image {
+    display: block;
+  
+    width: auto;
+    height: auto;
+  
+    max-width: 100%;
+    max-height: 78vh;
+  
+    object-fit: contain;
+  }
+  
+  .artwork-gallery__lightbox-info {
+    margin-top: 12px;
+  
+    text-align: center;
+  
+    font-size: 12px;
+    line-height: 1.45;
+  }
+  
+  .artwork-gallery__lightbox-info p {
+    margin: 1px 0;
+  }
+  
+  .artwork-gallery__close {
+    position: absolute;
+  
+    top: 22px;
+    right: 25px;
+  
+    padding: 0;
+  
+    border: 0;
+    background: none;
+  
+    color: #303030;
+  
+    font-family: inherit;
+    font-size: 28px;
+    font-weight: 300;
+  
+    cursor: pointer;
+  
+    transition: opacity 0.2s ease;
+  }
+  
+  .artwork-gallery__close:hover {
+    opacity: 0.5;
+  }
+  
+  .artwork-gallery__arrow {
+    position: absolute;
+  
+    top: 50%;
+  
+    padding: 10px;
+  
+    border: 0;
+    background: none;
+  
+    color: #303030;
+  
+    font-family: inherit;
+    font-size: 26px;
+    font-weight: 300;
+  
+    cursor: pointer;
+  
+    transform: translateY(-50%);
+  
+    transition: opacity 0.2s ease;
+  }
+  
+  .artwork-gallery__arrow:hover {
+    opacity: 0.5;
+  }
+  
+  .artwork-gallery__arrow--left {
+    left: 25px;
+  }
+  
+  .artwork-gallery__arrow--right {
+    right: 25px;
+  }
+  
+  /* TABLET */
+  
+  @media (max-width: 1100px) {
+    .artwork-gallery {
+      column-count: 2;
+      column-gap: 30px;
+    }
+  
+    .artwork-gallery__artwork {
+      margin-bottom: 30px;
+    }
+  }
+  
+  /* CELULAR */
+  
+  @media (max-width: 768px) {
+    .artwork-gallery {
+      column-count: 1;
+    }
+  
+    .artwork-gallery__artwork {
+      margin-bottom: 28px;
+    }
+  
+    .artwork-gallery__lightbox-content {
+      width: calc(100vw - 70px);
+      height: calc(100vh - 80px);
+    }
+  
+    .artwork-gallery__lightbox-image {
+      max-width: 100%;
+      max-height: 70vh;
+    }
+  
+    .artwork-gallery__lightbox-info {
+      margin-top: 10px;
+  
+      font-size: 11px;
+    }
+  
+    .artwork-gallery__arrow {
+      padding: 5px;
+  
+      font-size: 22px;
+    }
+  
+    .artwork-gallery__arrow--left {
+      left: 8px;
+    }
+  
+    .artwork-gallery__arrow--right {
+      right: 8px;
+    }
+  
+    .artwork-gallery__close {
+      top: 15px;
+      right: 18px;
+  
+      font-size: 26px;
+    }
+  }
