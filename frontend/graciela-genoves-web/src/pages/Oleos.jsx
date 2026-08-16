@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 
 import { getArtworks } from "../services/api";
 import firmaNegra from "../assets/firma-negra.png";
@@ -132,9 +128,12 @@ function Oleos() {
               >
                 <img
                   className="oleos__image"
-                  src={artwork.optimized_image_url}
+                  src={
+                    artwork.thumbnail_image_url || artwork.optimized_image_url
+                  }
                   alt={artwork.title}
                   loading="lazy"
+                  decoding="async"
                 />
               </button>
             </article>
@@ -220,9 +219,7 @@ function Oleos() {
 
               {selectedArtwork.year && <p>{selectedArtwork.year}</p>}
 
-              {selectedArtwork.technique && (
-                <p>{selectedArtwork.technique}</p>
-              )}
+              {selectedArtwork.technique && <p>{selectedArtwork.technique}</p>}
 
               {selectedArtwork.dimensions && (
                 <p>{selectedArtwork.dimensions}</p>
