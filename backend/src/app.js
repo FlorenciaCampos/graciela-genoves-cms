@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-
 import artworkRoutes from "./routes/artwork.routes.js";
 import authRoutes from "./auth/auth.routes.js";
+import exhibitionRoutes from "./routes/exhibition.routes.js";
 
 const app = express();
 
@@ -18,5 +18,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/artworks", artworkRoutes);
+app.use("/api/exhibitions", exhibitionRoutes);
 
 export default app;
