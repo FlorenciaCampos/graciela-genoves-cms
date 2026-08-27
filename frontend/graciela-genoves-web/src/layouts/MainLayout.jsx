@@ -77,7 +77,6 @@ function MainLayout() {
 
           <Link to="/bio">bio</Link>
 
-          <a href="#">c.v.</a>
 
           <Link to="/contacto">contacto</Link>
         </nav>

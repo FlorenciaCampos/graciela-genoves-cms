@@ -70,7 +70,7 @@ function Home() {
 
             <Link to="/bio">bio</Link>
 
-            <a href="#">c.v.</a>
+          
 
             <Link to="/contacto">Contacto</Link>
           </nav>
