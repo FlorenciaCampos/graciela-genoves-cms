@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
-import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 import homeImage from "../assets/home.jpg";
 import firma from "../assets/firma.png";
@@ -12,7 +16,15 @@ function Home() {
 
       <div className="home__interface">
         <header className="home__header">
-          <img className="home__signature" src={firma} alt="Graciela Genovés" />
+          <img
+            className="home__signature"
+            src={firma}
+            alt="Firma de Graciela Genovés"
+          />
+
+          <h1 className="home__artist-name">
+            Graciela Genovés
+          </h1>
 
           <nav className="home__nav">
             <div className="home__nav-group">
@@ -25,14 +37,31 @@ function Home() {
             </div>
 
             <div className="home__nav-group">
-              <span className="home__nav-label">Exhibiciones</span>
+              <span className="home__nav-label">
+                Exhibiciones
+              </span>
 
               <div className="home__submenu">
-                <Link to="/exhibiciones/tonal">Tonal</Link>
-                <Link to="/exhibiciones/leitmotiv">Leitmotiv</Link>
-                <Link to="/exhibiciones/madrigal">Madrigal</Link>
-                <Link to="/exhibiciones/atlanta">Atlanta</Link>
-                <Link to="/exhibiciones/rapsodia">Rapsodia</Link>
+                <Link to="/exhibiciones/tonal">
+                  Tonal
+                </Link>
+
+                <Link to="/exhibiciones/leitmotiv">
+                  Leitmotiv
+                </Link>
+
+                <Link to="/exhibiciones/madrigal">
+                  Madrigal
+                </Link>
+
+                <Link to="/exhibiciones/atlanta">
+                  Atlanta
+                </Link>
+
+                <Link to="/exhibiciones/rapsodia">
+                  Rapsodia
+                </Link>
+
                 <Link to="/exhibiciones/febril-la-mirada">
                   Febril la mirada
                 </Link>
@@ -40,7 +69,9 @@ function Home() {
             </div>
 
             <Link to="/bio">bio</Link>
+
             <a href="#">c.v.</a>
+
             <Link to="/contacto">Contacto</Link>
           </nav>
         </header>

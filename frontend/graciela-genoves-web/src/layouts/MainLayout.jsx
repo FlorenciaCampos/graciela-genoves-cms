@@ -1,5 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
-import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaFacebookF,
+  FaWhatsapp,
+} from "react-icons/fa";
+
 import "../styles/MainLayout.css";
 import firmaNegra from "../assets/firma-negra.png";
 
@@ -15,13 +20,22 @@ function MainLayout() {
           <img
             className="main-layout__signature"
             src={firmaNegra}
-            alt="Graciela Genovés"
+            alt="Firma de Graciela Genovés"
           />
+        </Link>
+
+        <Link
+          to="/"
+          className="main-layout__artist-name"
+        >
+          Graciela Genovés
         </Link>
 
         <nav className="main-layout__nav">
           <div className="main-layout__nav-group">
-            <span className="main-layout__nav-label">obras</span>
+            <span className="main-layout__nav-label">
+              obras
+            </span>
 
             <div className="main-layout__submenu">
               <Link to="/oleos">óleos</Link>
@@ -30,20 +44,41 @@ function MainLayout() {
           </div>
 
           <div className="main-layout__nav-group">
-            <span className="main-layout__nav-label">exhibiciones</span>
+            <span className="main-layout__nav-label">
+              exhibiciones
+            </span>
 
             <div className="main-layout__submenu">
-              <Link to="/exhibiciones/tonal">Tonal</Link>
-              <Link to="/exhibiciones/leitmotiv">Leitmotiv</Link>
-              <Link to="/exhibiciones/madrigal">Madrigal</Link>
-              <Link to="/exhibiciones/atlanta">Atlanta</Link>
-              <Link to="/exhibiciones/rapsodia">Rapsodia</Link>
-              <Link to="/exhibiciones/febril-la-mirada">Febril la mirada</Link>
+              <Link to="/exhibiciones/tonal">
+                Tonal
+              </Link>
+
+              <Link to="/exhibiciones/leitmotiv">
+                Leitmotiv
+              </Link>
+
+              <Link to="/exhibiciones/madrigal">
+                Madrigal
+              </Link>
+
+              <Link to="/exhibiciones/atlanta">
+                Atlanta
+              </Link>
+
+              <Link to="/exhibiciones/rapsodia">
+                Rapsodia
+              </Link>
+
+              <Link to="/exhibiciones/febril-la-mirada">
+                Febril la mirada
+              </Link>
             </div>
           </div>
 
           <Link to="/bio">bio</Link>
+
           <a href="#">c.v.</a>
+
           <Link to="/contacto">contacto</Link>
         </nav>
       </header>
