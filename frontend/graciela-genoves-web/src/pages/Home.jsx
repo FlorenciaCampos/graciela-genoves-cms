@@ -1,9 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  FaInstagram,
-  FaFacebookF,
-  FaWhatsapp,
-} from "react-icons/fa";
+import { FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 
 import homeImage from "../assets/home.jpg";
 import firma from "../assets/firma.png";
@@ -12,19 +8,11 @@ import "./Home.css";
 function Home() {
   return (
     <section className="home">
-      <img
-        className="home__image"
-        src={homeImage}
-        alt=""
-      />
+      <img className="home__image" src={homeImage} alt="" />
 
       <div className="home__interface">
         <header className="home__header">
-          <img
-            className="home__signature"
-            src={firma}
-            alt="Graciela Genovés"
-          />
+          <img className="home__signature" src={firma} alt="Graciela Genovés" />
 
           <nav className="home__nav">
             <div className="home__nav-group">
@@ -40,12 +28,14 @@ function Home() {
               <span className="home__nav-label">Exhibiciones</span>
 
               <div className="home__submenu">
-                <a href="#">Tonal</a>
-                <a href="#">Leitmotiv</a>
-                <a href="#">Madrigal</a>
-                <a href="#">Atlanta</a>
-                <a href="#">Rapsodia</a>
-                <a href="#">Febril la mirada</a>
+                <Link to="/exhibiciones/tonal">Tonal</Link>
+                <Link to="/exhibiciones/leitmotiv">Leitmotiv</Link>
+                <Link to="/exhibiciones/madrigal">Madrigal</Link>
+                <Link to="/exhibiciones/atlanta">Atlanta</Link>
+                <Link to="/exhibiciones/rapsodia">Rapsodia</Link>
+                <Link to="/exhibiciones/febril-la-mirada">
+                  Febril la mirada
+                </Link>
               </div>
             </div>
 

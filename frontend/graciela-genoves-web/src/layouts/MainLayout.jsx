@@ -33,12 +33,12 @@ function MainLayout() {
             <span className="main-layout__nav-label">exhibiciones</span>
 
             <div className="main-layout__submenu">
-              <a href="#">Tonal</a>
-              <a href="#">Leitmotiv</a>
-              <a href="#">Madrigal</a>
-              <a href="#">Atlanta</a>
-              <a href="#">Rapsodia</a>
-              <a href="#">Febril la mirada</a>
+              <Link to="/exhibiciones/tonal">Tonal</Link>
+              <Link to="/exhibiciones/leitmotiv">Leitmotiv</Link>
+              <Link to="/exhibiciones/madrigal">Madrigal</Link>
+              <Link to="/exhibiciones/atlanta">Atlanta</Link>
+              <Link to="/exhibiciones/rapsodia">Rapsodia</Link>
+              <Link to="/exhibiciones/febril-la-mirada">Febril la mirada</Link>
             </div>
           </div>
 

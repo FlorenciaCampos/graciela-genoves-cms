@@ -1,5 +1,5 @@
-import * as exhibitionModel from "../models/exhibition.model.js";
+import { getExhibitionBySlug } from "../models/exhibition.model.js";
 
-export const getExhibitionBySlug = async (slug) => {
-  return await exhibitionModel.getExhibitionBySlug(slug);
+export const getExhibitionBySlugService = async (slug) => {
+  return await getExhibitionBySlug(slug);
 };

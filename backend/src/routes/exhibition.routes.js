@@ -1,8 +1,8 @@
 import express from "express";
-import { getExhibitionBySlug } from "../controllers/exhibition.controller.js";
+import { getExhibitionBySlugController } from "../controllers/exhibition.controller.js";
 
 const router = express.Router();
 
-router.get("/:slug", getExhibitionBySlug);
+router.get("/:slug", getExhibitionBySlugController);
 
 export default router;

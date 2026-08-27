@@ -21,3 +21,15 @@ export async function getArtworks(category) {
 
   return result.data;
 }
+
+export async function getExhibitionBySlug(slug) {
+  const response = await fetch(`${API_URL}/api/exhibitions/${slug}`);
+
+  if (!response.ok) {
+    throw new Error("No se pudo obtener la exhibición.");
+  }
+
+  const result = await response.json();
+
+  return result.data;
+}

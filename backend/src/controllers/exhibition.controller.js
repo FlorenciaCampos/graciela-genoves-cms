@@ -1,10 +1,10 @@
-import * as exhibitionService from "../services/exhibition.service.js";
+import { getExhibitionBySlugService } from "../services/exhibition.service.js";
 
-export const getExhibitionBySlug = async (req, res) => {
+export const getExhibitionBySlugController = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const exhibition = await exhibitionService.getExhibitionBySlug(slug);
+    const exhibition = await getExhibitionBySlugService(slug);
 
     if (!exhibition) {
       return res.status(404).json({
