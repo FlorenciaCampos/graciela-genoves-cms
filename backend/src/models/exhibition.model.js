@@ -10,6 +10,18 @@ export const getExhibitionBySlug = async (slug) => {
         image_url,
         caption,
         created_at
+      ),
+      exhibition_artworks (
+        artwork_id,
+        artworks (
+          id,
+          title,
+          year,
+          technique,
+          dimensions,
+          optimized_image_url,
+          thumbnail_image_url
+        )
       )
     `)
     .eq("slug", slug)
