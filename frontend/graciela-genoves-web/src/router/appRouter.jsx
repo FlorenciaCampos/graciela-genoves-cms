@@ -9,6 +9,10 @@ import ExhibitionPage from "../pages/ExhibitionPage";
 import Bio from "../pages/Bio";
 import Contacto from "../pages/Contacto";
 
+import AdminLogin from "../admin/pages/AdminLogin";
+import AdminDashboard from "../admin/pages/AdminDashboard";
+import ProtectedRoute from "../admin/components/ProtectedRoute";
+
 export const appRouter = createBrowserRouter([
   {
     element: <HomeLayout />,
@@ -43,5 +47,17 @@ export const appRouter = createBrowserRouter([
         element: <Contacto />,
       },
     ],
+  },
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute>
+        <AdminDashboard />
+      </ProtectedRoute>
+    ),
   },
 ]);
