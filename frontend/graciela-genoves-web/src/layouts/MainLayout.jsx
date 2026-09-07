@@ -43,42 +43,17 @@ function MainLayout() {
             </div>
           </div>
 
-          <div className="main-layout__nav-group">
-            <span className="main-layout__nav-label">
-              exhibiciones
-            </span>
+          <Link to="/exposiciones">
+            exposiciones
+          </Link>
 
-            <div className="main-layout__submenu">
-              <Link to="/exhibiciones/tonal">
-                Tonal
-              </Link>
+          <Link to="/acerca-de-mi">
+            acerca de mí
+          </Link>
 
-              <Link to="/exhibiciones/leitmotiv">
-                Leitmotiv
-              </Link>
-
-              <Link to="/exhibiciones/madrigal">
-                Madrigal
-              </Link>
-
-              <Link to="/exhibiciones/atlanta">
-                Atlanta
-              </Link>
-
-              <Link to="/exhibiciones/rapsodia">
-                Rapsodia
-              </Link>
-
-              <Link to="/exhibiciones/febril-la-mirada">
-                Febril la mirada
-              </Link>
-            </div>
-          </div>
-
-          <Link to="/bio">bio</Link>
-
-
-          <Link to="/contacto">contacto</Link>
+          <Link to="/contacto">
+            contacto
+          </Link>
         </nav>
       </header>
 
