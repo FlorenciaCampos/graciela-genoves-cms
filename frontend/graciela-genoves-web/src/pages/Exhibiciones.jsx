@@ -19,6 +19,24 @@ function Exhibiciones() {
     loadExhibitions();
   }, []);
 
+  const exhibitionTitles = [
+    "Tonal",
+    "Leitmotiv",
+    "Madrigal",
+    "Atlanta",
+    "Rapsodia",
+    "Febril la mirada",
+  ];
+
+  const displayExhibitions =
+    exhibitions.length === 1
+      ? exhibitionTitles.map((title, index) => ({
+          ...exhibitions[0],
+          id: `preview-${index}`,
+          title,
+        }))
+      : exhibitions;
+
   return (
     <section className="exposiciones">
       <h1 className="exposiciones__title">
@@ -26,7 +44,7 @@ function Exhibiciones() {
       </h1>
 
       <div className="exposiciones__grid">
-        {exhibitions.map((exhibition) => {
+        {displayExhibitions.map((exhibition) => {
           const coverImage =
             exhibition.exhibition_images?.[0]?.image_url;
 
