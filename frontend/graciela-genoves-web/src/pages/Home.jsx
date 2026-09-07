@@ -36,43 +36,17 @@ function Home() {
               </div>
             </div>
 
-            <div className="home__nav-group">
-              <span className="home__nav-label">
-                Exhibiciones
-              </span>
+            <Link to="/exposiciones">
+              Exposiciones
+            </Link>
 
-              <div className="home__submenu">
-                <Link to="/exhibiciones/tonal">
-                  Tonal
-                </Link>
+            <Link to="/acerca-de-mi">
+              Acerca de mí
+            </Link>
 
-                <Link to="/exhibiciones/leitmotiv">
-                  Leitmotiv
-                </Link>
-
-                <Link to="/exhibiciones/madrigal">
-                  Madrigal
-                </Link>
-
-                <Link to="/exhibiciones/atlanta">
-                  Atlanta
-                </Link>
-
-                <Link to="/exhibiciones/rapsodia">
-                  Rapsodia
-                </Link>
-
-                <Link to="/exhibiciones/febril-la-mirada">
-                  Febril la mirada
-                </Link>
-              </div>
-            </div>
-
-            <Link to="/bio">bio</Link>
-
-          
-
-            <Link to="/contacto">Contacto</Link>
+            <Link to="/contacto">
+              Contacto
+            </Link>
           </nav>
         </header>
 

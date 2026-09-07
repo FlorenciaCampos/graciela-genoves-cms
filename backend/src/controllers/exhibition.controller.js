@@ -1,21 +1,12 @@
-import { getExhibitionBySlugService } from "../services/exhibition.service.js";
+import { getAllExhibitionsService } from "../services/exhibition.service.js";
 
-export const getExhibitionBySlugController = async (req, res) => {
+export const getAllExhibitionsController = async (req, res) => {
   try {
-    const { slug } = req.params;
-
-    const exhibition = await getExhibitionBySlugService(slug);
-
-    if (!exhibition) {
-      return res.status(404).json({
-        success: false,
-        message: "Exhibición no encontrada.",
-      });
-    }
+    const exhibitions = await getAllExhibitionsService();
 
     return res.status(200).json({
       success: true,
-      data: exhibition,
+      data: exhibitions,
     });
   } catch (error) {
     return res.status(500).json({

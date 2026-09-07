@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;600;700&display=swap");
+
+.exposiciones {
+  min-height: 100vh;
+
+  margin-left: 190px;
+  padding: 55px 45px 80px;
+  box-sizing: border-box;
+
+  color: #303030;
+
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.exposiciones__title {
+  margin: 0 0 36px;
+
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.exposiciones__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 52px 28px;
+
+  width: 100%;
+}
+
+.exposiciones__item {
+  min-width: 0;
+}
+
+.exposiciones__link {
+  display: block;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.exposiciones__image-wrapper {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+
+  margin-bottom: 14px;
+
+  overflow: hidden;
+
+  background: #f3f3f3;
+}
+
+.exposiciones__image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s ease;
+}
+
+.exposiciones__link:hover .exposiciones__image {
+  opacity: 0.9;
+  transform: scale(1.01);
+}
+
+.exposiciones__info h2 {
+  margin: 0 0 7px;
+
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.exposiciones__info p {
+  margin: 0 0 4px;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.exposiciones__more {
+  display: inline-block;
+
+  margin-top: 12px;
+  padding-bottom: 3px;
+
+  border-bottom: 1px solid #555;
+
+  font-size: 13px;
+  font-weight: 400;
+
+  transition: opacity 0.2s ease;
+}
+
+.exposiciones__link:hover .exposiciones__more {
+  opacity: 0.55;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+  .exposiciones {
+    margin-left: 175px;
+
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  .exposiciones__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 42px 24px;
+  }
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+  .exposiciones {
+    margin-left: 0;
+
+    padding: 35px 20px 50px;
+  }
+
+  .exposiciones__title {
+    margin-bottom: 28px;
+
+    font-size: 27px;
+  }
+
+  .exposiciones__grid {
+    grid-template-columns: 1fr;
+
+    gap: 38px;
+  }
+
+  .exposiciones__info h2 {
+    font-size: 21px;
+  }
+
+  .exposiciones__info p {
+    font-size: 14px;
+  }
+
+  .exposiciones__more {
+    font-size: 13px;
+  }
+}

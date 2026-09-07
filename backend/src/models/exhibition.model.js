@@ -1,38 +1,28 @@
 import { supabaseAdmin } from "../config/supabase.js";
 
-export const getExhibitionBySlug = async (slug) => {
+export const getAllExhibitions = async () => {
   const { data, error } = await supabaseAdmin
     .from("exhibitions")
     .select(`
-      *,
+      id,
+      title,
+      year,
+      venue,
+      curator,
+      short_description,
+      curatorial_pdf_url,
+      order_index,
       exhibition_images (
         id,
         image_url,
         caption,
         created_at
-      ),
-      exhibition_artworks (
-        artwork_id,
-        artworks (
-          id,
-          title,
-          year,
-          technique,
-          dimensions,
-          optimized_image_url,
-          thumbnail_image_url
-        )
       )
     `)
-    .eq("slug", slug)
     .eq("is_visible", true)
-    .single();
+    .order("order_index", { ascending: true });
 
   if (error) {
-    if (error.code === "PGRST116") {
-      return null;
-    }
-
     throw new Error(error.message);
   }
 

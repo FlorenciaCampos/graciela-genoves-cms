@@ -22,11 +22,11 @@ export async function getArtworks(category) {
   return result.data;
 }
 
-export async function getExhibitionBySlug(slug) {
-  const response = await fetch(`${API_URL}/api/exhibitions/${slug}`);
+export async function getExhibitions() {
+  const response = await fetch(`${API_URL}/api/exhibitions`);
 
   if (!response.ok) {
-    throw new Error("No se pudo obtener la exhibición.");
+    throw new Error("No se pudieron obtener las exposiciones.");
   }
 
   const result = await response.json();
