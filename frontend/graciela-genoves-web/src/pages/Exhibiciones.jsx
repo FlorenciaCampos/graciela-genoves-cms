@@ -96,6 +96,17 @@ function Exhibiciones() {
                     Descargar texto curatorial ↓
                   </a>
                 )}
+
+                {exhibition.catalog_pdf_url && (
+                  <a
+                    className="exposiciones__pdf"
+                    href={exhibition.catalog_pdf_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Descargar catálogo ↓
+                  </a>
+                )}
               </div>
             </article>
           );

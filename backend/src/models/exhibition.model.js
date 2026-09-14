@@ -11,6 +11,7 @@ export const getAllExhibitions = async () => {
       curator,
       short_description,
       curatorial_pdf_url,
+      catalog_pdf_url,
       order_index,
       exhibition_images (
         id,
