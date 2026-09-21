@@ -151,15 +151,31 @@ function ExhibitionPage() {
             </p>
           )}
 
-          {exhibition.curatorial_pdf_url && (
-            <a
-              className="exhibition-page__curatorial-link"
-              href={exhibition.curatorial_pdf_url}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Descargar texto curatorial ↓
-            </a>
+          {(exhibition.curatorial_pdf_url ||
+            exhibition.catalog_pdf_url) && (
+            <div className="exhibition-page__downloads">
+              {exhibition.curatorial_pdf_url && (
+                <a
+                  className="exhibition-page__download-link"
+                  href={exhibition.curatorial_pdf_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Descargar texto curatorial ↓
+                </a>
+              )}
+
+              {exhibition.catalog_pdf_url && (
+                <a
+                  className="exhibition-page__download-link"
+                  href={exhibition.catalog_pdf_url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Descargar catálogo ↓
+                </a>
+              )}
+            </div>
           )}
         </div>
 

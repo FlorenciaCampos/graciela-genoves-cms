@@ -46,20 +46,44 @@
   line-height: 1.45;
 }
 
-.exhibition-page__curatorial-link {
+/* DESCARGAS */
+
+.exhibition-page__downloads {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  margin-top: 20px;
+}
+
+.exhibition-page__download-link {
   display: inline-block;
 
   color: inherit;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  text-decoration: none;
+
+  text-decoration: none !important;
   text-transform: uppercase;
+
+  border: 0 !important;
+  border-bottom: 0 !important;
 
   transition: opacity 0.2s ease;
 }
 
-.exhibition-page__curatorial-link:hover {
+.exhibition-page__download-link:link,
+.exhibition-page__download-link:visited,
+.exhibition-page__download-link:hover,
+.exhibition-page__download-link:active,
+.exhibition-page__download-link:focus {
+  color: inherit;
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+}
+
+.exhibition-page__download-link:hover {
   opacity: 0.5;
 }
 
@@ -102,6 +126,9 @@
 
   object-fit: cover;
   object-position: center;
+
+  /* Redondeo muy suave */
+  border-radius: 4px;
 
   transition: opacity 0.25s ease;
 }
@@ -148,6 +175,8 @@
   max-height: 78vh;
 
   object-fit: contain;
+
+  border-radius: 4px;
 }
 
 .exhibition-page__lightbox-info {
@@ -266,6 +295,13 @@
 
   .exhibition-page__description {
     font-size: 15px;
+  }
+
+  .exhibition-page__downloads {
+    flex-wrap: wrap;
+    gap: 12px 20px;
+
+    margin-top: 18px;
   }
 
   .exhibition-page__gallery {
