@@ -5,6 +5,7 @@ import "../styles/Exposiciones.css";
 
 function Exhibiciones() {
   const [exhibitions, setExhibitions] = useState([]);
+  const [sortOrder, setSortOrder] = useState("recent");
 
   useEffect(() => {
     async function loadExhibitions() {
@@ -19,32 +20,49 @@ function Exhibiciones() {
     loadExhibitions();
   }, []);
 
-  const exhibitionTitles = [
-    "Tonal",
-    "Leitmotiv",
-    "Madrigal",
-    "Atlanta",
-    "Rapsodia",
-    "Febril la mirada",
-  ];
+  const sortedExhibitions = [...exhibitions].sort((a, b) => {
+    const yearA = Number(a.year) || 0;
+    const yearB = Number(b.year) || 0;
 
-  const displayExhibitions =
-    exhibitions.length === 1
-      ? exhibitionTitles.map((title, index) => ({
-          ...exhibitions[0],
-          id: `preview-${index}`,
-          title,
-        }))
-      : exhibitions;
+    if (sortOrder === "recent") {
+      return yearB - yearA;
+    }
+
+    return yearA - yearB;
+  });
 
   return (
     <section className="exposiciones">
-      <h1 className="exposiciones__title">
-        Exposiciones
-      </h1>
+      <div className="exposiciones__header">
+        <h1 className="exposiciones__title">
+          Exposiciones
+        </h1>
+
+        <div className="exposiciones__sort">
+          <label htmlFor="sort-exhibitions">
+            Ordenar por:
+          </label>
+
+          <select
+            id="sort-exhibitions"
+            value={sortOrder}
+            onChange={(event) =>
+              setSortOrder(event.target.value)
+            }
+          >
+            <option value="recent">
+              Más recientes
+            </option>
+
+            <option value="oldest">
+              Más antiguas
+            </option>
+          </select>
+        </div>
+      </div>
 
       <div className="exposiciones__grid">
-        {displayExhibitions.map((exhibition) => {
+        {sortedExhibitions.map((exhibition) => {
           const coverImage =
             exhibition.exhibition_images?.[0]?.image_url;
 
