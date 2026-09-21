@@ -42,6 +42,8 @@
   overflow: hidden;
 
   background: #f3f3f3;
+
+  border-radius: 4px;
 }
 
 .exposiciones__image {
@@ -51,6 +53,8 @@
   height: 100%;
 
   object-fit: cover;
+
+  border-radius: 4px;
 }
 
 .exposiciones__info h2 {
@@ -82,11 +86,12 @@
   display: inline-block;
 
   margin-top: 14px;
-  padding-bottom: 3px;
+  margin-right: 28px;
 
   color: #303030;
 
-  border-bottom: 1px solid #555;
+  border: none;
+  border-bottom: none;
 
   font-size: 13px;
   font-weight: 500;
@@ -94,6 +99,20 @@
   text-decoration: none;
 
   transition: opacity 0.2s ease;
+}
+
+.exposiciones__pdf:last-child {
+  margin-right: 0;
+}
+
+.exposiciones__pdf:link,
+.exposiciones__pdf:visited,
+.exposiciones__pdf:hover,
+.exposiciones__pdf:active,
+.exposiciones__pdf:focus {
+  color: #303030;
+  text-decoration: none;
+  border-bottom: none;
 }
 
 .exposiciones__pdf:hover {
@@ -143,6 +162,8 @@
   }
 
   .exposiciones__pdf {
+    margin-right: 20px;
+
     font-size: 13px;
   }
 }
