@@ -7,9 +7,39 @@ import {
 
 import homeImage from "../assets/home.jpg";
 import firma from "../assets/firma.png";
+import useLanguage from "../context/useLanguage";
 import "./Home.css";
 
 function Home() {
+  const { language, changeLanguage } = useLanguage();
+
+  const texts = {
+    es: {
+      works: "Obras",
+      oils: "Óleos",
+      watercolors: "Acuarelas",
+      exhibitions: "Exposiciones",
+      about: "Acerca de mí",
+      contact: "Contacto",
+      developedBy: "Desarrollado por",
+      signatureAlt: "Firma de Graciela Genovés",
+      languageLabel: "Seleccionar idioma",
+    },
+    en: {
+      works: "Works",
+      oils: "Oils",
+      watercolors: "Watercolors",
+      exhibitions: "Exhibitions",
+      about: "About me",
+      contact: "Contact",
+      developedBy: "Developed by",
+      signatureAlt: "Graciela Genovés signature",
+      languageLabel: "Select language",
+    },
+  };
+
+  const t = texts[language];
+
   return (
     <section className="home">
       <img className="home__image" src={homeImage} alt="" />
@@ -19,7 +49,7 @@ function Home() {
           <img
             className="home__signature"
             src={firma}
-            alt="Firma de Graciela Genovés"
+            alt={t.signatureAlt}
           />
 
           <h1 className="home__artist-name">
@@ -28,25 +58,60 @@ function Home() {
 
           <nav className="home__nav">
             <div className="home__nav-group">
-              <span className="home__nav-label">Obras</span>
+              <span className="home__nav-label">
+                {t.works}
+              </span>
 
               <div className="home__submenu">
-                <Link to="/oleos">Óleos</Link>
-                <Link to="/acuarelas">Acuarelas</Link>
+                <Link to="/oleos">{t.oils}</Link>
+                <Link to="/acuarelas">
+                  {t.watercolors}
+                </Link>
               </div>
             </div>
 
             <Link to="/exposiciones">
-              Exposiciones
+              {t.exhibitions}
             </Link>
 
             <Link to="/acerca-de-mi">
-              Acerca de mí
+              {t.about}
             </Link>
 
             <Link to="/contacto">
-              Contacto
+              {t.contact}
             </Link>
+
+            <div
+              className="home__language"
+              aria-label={t.languageLabel}
+            >
+              <button
+                type="button"
+                className={
+                  language === "es"
+                    ? "home__language-button home__language-button--active"
+                    : "home__language-button"
+                }
+                onClick={() => changeLanguage("es")}
+              >
+                ES
+              </button>
+
+              <span>/</span>
+
+              <button
+                type="button"
+                className={
+                  language === "en"
+                    ? "home__language-button home__language-button--active"
+                    : "home__language-button"
+                }
+                onClick={() => changeLanguage("en")}
+              >
+                EN
+              </button>
+            </div>
           </nav>
         </header>
 
@@ -84,7 +149,7 @@ function Home() {
             <span>© 2026 Graciela Genovés</span>
 
             <span>
-              Desarrollado por{" "}
+              {t.developedBy}{" "}
               <a
                 href="https://www.instagram.com/pasaje_studio/"
                 target="_blank"

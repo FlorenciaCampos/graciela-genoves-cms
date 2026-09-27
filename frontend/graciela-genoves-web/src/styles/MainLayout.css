@@ -146,6 +146,55 @@
   opacity: 1;
 }
 
+/* SELECTOR DE IDIOMA */
+
+.main-layout__language {
+  position: fixed;
+
+  top: 34px;
+  right: 30px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  z-index: 20;
+
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.main-layout__language-button {
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #303030;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+
+  cursor: pointer;
+
+  opacity: 0.45;
+
+  transition: opacity 0.2s ease;
+}
+
+.main-layout__language-button:hover {
+  opacity: 0.75;
+}
+
+.main-layout__language-button--active {
+  font-weight: 600;
+  opacity: 1;
+}
+
 /* CONTENIDO */
 
 .main-layout__content {
@@ -292,6 +341,23 @@
   .main-layout__submenu a {
     font-size: 12px;
     white-space: nowrap;
+  }
+
+  /* IDIOMA EN CELULAR */
+
+  .main-layout__language {
+    position: absolute;
+
+    top: 22px;
+    right: 20px;
+
+    gap: 5px;
+
+    font-size: 11px;
+  }
+
+  .main-layout__language-button {
+    font-size: 11px;
   }
 
   .main-layout__content {

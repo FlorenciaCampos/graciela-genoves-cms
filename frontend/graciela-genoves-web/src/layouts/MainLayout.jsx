@@ -7,8 +7,36 @@ import {
 
 import "../styles/MainLayout.css";
 import firmaNegra from "../assets/firma-negra.png";
+import useLanguage from "../context/useLanguage";
 
 function MainLayout() {
+  const { language, changeLanguage } = useLanguage();
+
+  const texts = {
+    es: {
+      works: "obras",
+      oils: "óleos",
+      watercolors: "acuarelas",
+      exhibitions: "exposiciones",
+      about: "acerca de mí",
+      contact: "contacto",
+      developedBy: "Desarrollado por",
+      signatureAlt: "Firma de Graciela Genovés",
+    },
+    en: {
+      works: "works",
+      oils: "oils",
+      watercolors: "watercolors",
+      exhibitions: "exhibitions",
+      about: "about me",
+      contact: "contact",
+      developedBy: "Developed by",
+      signatureAlt: "Graciela Genovés signature",
+    },
+  };
+
+  const t = texts[language];
+
   return (
     <div className="main-layout">
       <header className="main-layout__header">
@@ -20,7 +48,7 @@ function MainLayout() {
           <img
             className="main-layout__signature"
             src={firmaNegra}
-            alt="Firma de Graciela Genovés"
+            alt={t.signatureAlt}
           />
         </Link>
 
@@ -34,26 +62,57 @@ function MainLayout() {
         <nav className="main-layout__nav">
           <div className="main-layout__nav-group">
             <span className="main-layout__nav-label">
-              obras
+              {t.works}
             </span>
 
             <div className="main-layout__submenu">
-              <Link to="/oleos">óleos</Link>
-              <Link to="/acuarelas">acuarelas</Link>
+              <Link to="/oleos">{t.oils}</Link>
+              <Link to="/acuarelas">{t.watercolors}</Link>
             </div>
           </div>
 
           <Link to="/exposiciones">
-            exposiciones
+            {t.exhibitions}
           </Link>
 
           <Link to="/acerca-de-mi">
-            acerca de mí
+            {t.about}
           </Link>
 
           <Link to="/contacto">
-            contacto
+            {t.contact}
           </Link>
+
+          <div
+            className="main-layout__language"
+            aria-label="Seleccionar idioma"
+          >
+            <button
+              type="button"
+              className={
+                language === "es"
+                  ? "main-layout__language-button main-layout__language-button--active"
+                  : "main-layout__language-button"
+              }
+              onClick={() => changeLanguage("es")}
+            >
+              ES
+            </button>
+
+            <span>/</span>
+
+            <button
+              type="button"
+              className={
+                language === "en"
+                  ? "main-layout__language-button main-layout__language-button--active"
+                  : "main-layout__language-button"
+              }
+              onClick={() => changeLanguage("en")}
+            >
+              EN
+            </button>
+          </div>
         </nav>
       </header>
 
@@ -95,7 +154,7 @@ function MainLayout() {
           <span>© 2026 Graciela Genovés</span>
 
           <span>
-            Desarrollado por{" "}
+            {t.developedBy}{" "}
             <a
               href="https://www.instagram.com/pasaje_studio/"
               target="_blank"

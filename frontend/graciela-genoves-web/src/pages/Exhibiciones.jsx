@@ -1,11 +1,35 @@
 import { useEffect, useState } from "react";
 
 import { getExhibitions } from "../services/api";
+import useLanguage from "../context/useLanguage";
 import "../styles/Exposiciones.css";
 
 function Exhibiciones() {
   const [exhibitions, setExhibitions] = useState([]);
   const [sortOrder, setSortOrder] = useState("recent");
+
+  const { language } = useLanguage();
+
+  const texts = {
+    es: {
+      sortBy: "Ordenar por:",
+      recent: "Más recientes",
+      oldest: "Más antiguas",
+      curator: "Curaduría",
+      curatorialText: "Descargar texto curatorial ↓",
+      catalog: "Descargar catálogo ↓",
+    },
+    en: {
+      sortBy: "Sort by:",
+      recent: "Most recent",
+      oldest: "Oldest",
+      curator: "Curated by",
+      curatorialText: "Download curatorial text ↓",
+      catalog: "Download catalog ↓",
+    },
+  };
+
+  const t = texts[language];
 
   useEffect(() => {
     async function loadExhibitions() {
@@ -34,13 +58,9 @@ function Exhibiciones() {
   return (
     <section className="exposiciones">
       <div className="exposiciones__header">
-        <h1 className="exposiciones__title">
-          Exposiciones
-        </h1>
-
         <div className="exposiciones__sort">
           <label htmlFor="sort-exhibitions">
-            Ordenar por:
+            {t.sortBy}
           </label>
 
           <select
@@ -51,11 +71,11 @@ function Exhibiciones() {
             }
           >
             <option value="recent">
-              Más recientes
+              {t.recent}
             </option>
 
             <option value="oldest">
-              Más antiguas
+              {t.oldest}
             </option>
           </select>
         </div>
@@ -65,6 +85,22 @@ function Exhibiciones() {
         {sortedExhibitions.map((exhibition) => {
           const coverImage =
             exhibition.exhibition_images?.[0]?.image_url;
+
+          const title =
+            language === "en"
+              ? exhibition.title_en ||
+                exhibition.title_es ||
+                exhibition.title
+              : exhibition.title_es ||
+                exhibition.title;
+
+          const description =
+            language === "en"
+              ? exhibition.short_description_en ||
+                exhibition.short_description_es ||
+                exhibition.short_description
+              : exhibition.short_description_es ||
+                exhibition.short_description;
 
           return (
             <article
@@ -76,13 +112,13 @@ function Exhibiciones() {
                   <img
                     className="exposiciones__image"
                     src={coverImage}
-                    alt={exhibition.title}
+                    alt={title}
                   />
                 </div>
               )}
 
               <div className="exposiciones__info">
-                <h2>{exhibition.title}</h2>
+                <h2>{title}</h2>
 
                 {exhibition.year && (
                   <p>{exhibition.year}</p>
@@ -94,13 +130,13 @@ function Exhibiciones() {
 
                 {exhibition.curator && (
                   <p>
-                    Curaduría: {exhibition.curator}
+                    {t.curator}: {exhibition.curator}
                   </p>
                 )}
 
-                {exhibition.short_description && (
+                {description && (
                   <p className="exposiciones__description">
-                    {exhibition.short_description}
+                    {description}
                   </p>
                 )}
 
@@ -111,7 +147,7 @@ function Exhibiciones() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Descargar texto curatorial ↓
+                    {t.curatorialText}
                   </a>
                 )}
 
@@ -122,7 +158,7 @@ function Exhibiciones() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Descargar catálogo ↓
+                    {t.catalog}
                   </a>
                 )}
               </div>
