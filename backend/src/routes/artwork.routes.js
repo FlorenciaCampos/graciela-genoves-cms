@@ -8,6 +8,7 @@ import upload from "../middlewares/upload.middleware.js";
 import {
   createArtwork,
   getAllArtworks,
+  getAllArtworksAdmin,
   getArtworkById,
   updateArtwork,
 } from "../controllers/artwork.controller.js";
@@ -21,6 +22,14 @@ router.post(
   createArtwork
 );
 
+// ADMIN: obtiene todas las obras, incluidas las ocultas
+router.get(
+  "/admin",
+  authenticate,
+  getAllArtworksAdmin
+);
+
+// PÚBLICO: obtiene solamente las obras visibles
 router.get("/", getAllArtworks);
 
 router.get("/:id", getArtworkById);

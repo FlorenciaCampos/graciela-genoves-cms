@@ -43,10 +43,34 @@ export const getAllArtworks = async (category) => {
   return data;
 };
 
+// ADMIN: obtiene todas las obras, incluidas las ocultas
+export const getAllArtworksAdmin = async () => {
+  const { data, error } = await supabaseAdmin
+    .from("artworks")
+    .select(`
+      *,
+      category:categories!inner(slug)
+    `)
+    .order("order_index", {
+      ascending: true,
+      nullsFirst: false,
+    })
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 export const getArtworkById = async (id) => {
   const { data, error } = await supabaseAdmin
     .from("artworks")
-    .select("*")
+    .select(`
+      *,
+      category:categories(slug)
+    `)
     .eq("id", id)
     .single();
 

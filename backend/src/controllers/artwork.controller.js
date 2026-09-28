@@ -142,6 +142,23 @@ export const getAllArtworks = async (req, res) => {
   }
 };
 
+// ADMIN: obtiene todas las obras, incluidas las ocultas
+export const getAllArtworksAdmin = async (req, res) => {
+  try {
+    const artworks = await artworkService.getAllArtworksAdmin();
+
+    return res.status(200).json({
+      success: true,
+      data: artworks,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const getArtworkById = async (
   req,
   res

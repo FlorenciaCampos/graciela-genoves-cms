@@ -8,6 +8,11 @@ export const getAllArtworks = async (category) => {
   return await artworkModel.getAllArtworks(category);
 };
 
+// ADMIN: obtiene todas las obras, incluidas las ocultas
+export const getAllArtworksAdmin = async () => {
+  return await artworkModel.getAllArtworksAdmin();
+};
+
 export const getArtworkById = async (id) => {
   return await artworkModel.getArtworkById(id);
 };

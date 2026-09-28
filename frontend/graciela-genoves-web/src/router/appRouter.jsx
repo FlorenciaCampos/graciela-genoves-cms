@@ -11,6 +11,8 @@ import Contacto from "../pages/Contacto";
 
 import AdminLogin from "../admin/pages/AdminLogin";
 import AdminDashboard from "../admin/pages/AdminDashboard";
+import AdminArtworks from "../admin/pages/AdminArtworks";
+import AdminArtworkForm from "../admin/pages/AdminArtworkForm";
 import ProtectedRoute from "../admin/components/ProtectedRoute";
 
 export const appRouter = createBrowserRouter([
@@ -57,6 +59,22 @@ export const appRouter = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <AdminDashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/obras",
+    element: (
+      <ProtectedRoute>
+        <AdminArtworks />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin/obras/:id/editar",
+    element: (
+      <ProtectedRoute>
+        <AdminArtworkForm />
       </ProtectedRoute>
     ),
   },
