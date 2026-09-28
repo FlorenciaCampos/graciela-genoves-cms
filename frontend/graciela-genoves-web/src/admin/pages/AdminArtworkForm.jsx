@@ -6,6 +6,17 @@ import {
   updateAdminArtwork,
 } from "../services/adminArtworksService";
 
+const CATEGORIES = [
+  {
+    id: "8791cbfa-b68b-4fcb-a8a5-f2c22d995489",
+    name: "Óleo",
+  },
+  {
+    id: "f2367ac8-51c4-45f2-9be7-817efb071452",
+    name: "Acuarela",
+  },
+];
+
 function AdminArtworkForm() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,6 +38,7 @@ function AdminArtworkForm() {
           year: data.year || "",
           technique: data.technique || "",
           dimensions: data.dimensions || "",
+          category_id: data.category_id || "",
           order_index: data.order_index ?? "",
           is_visible: data.is_visible,
           original_image_url: data.original_image_url,
@@ -138,6 +150,23 @@ function AdminArtworkForm() {
             value={formData.dimensions}
             onChange={handleChange}
           />
+        </div>
+
+        <div>
+          <label htmlFor="category_id">Categoría</label>
+
+          <select
+            id="category_id"
+            name="category_id"
+            value={formData.category_id}
+            onChange={handleChange}
+          >
+            {CATEGORIES.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>
