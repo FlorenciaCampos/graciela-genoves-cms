@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   getAdminArtworkById,
   updateAdminArtwork,
+  createAdminArtwork,
 } from "../services/adminArtworksService";
 
 const CATEGORIES = [
@@ -17,17 +18,38 @@ const CATEGORIES = [
   },
 ];
 
+const EMPTY_FORM = {
+  title: "",
+  year: "",
+  technique: "",
+  dimensions: "",
+  category_id: CATEGORIES[0].id,
+  order_index: "",
+  is_visible: true,
+  original_image_url: "",
+  optimized_image_url: "",
+  thumbnail_image_url: "",
+};
+
 function AdminArtworkForm() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState(null);
+  const isEditing = Boolean(id);
+
+  const [formData, setFormData] = useState(
+    isEditing ? null : EMPTY_FORM
+  );
   const [newImage, setNewImage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!isEditing) {
+      return;
+    }
+
     async function loadArtwork() {
       try {
         setError("");
@@ -39,12 +61,12 @@ function AdminArtworkForm() {
           year: data.year || "",
           technique: data.technique || "",
           dimensions: data.dimensions || "",
-          category_id: data.category_id || "",
+          category_id: data.category_id || CATEGORIES[0].id,
           order_index: data.order_index ?? "",
           is_visible: data.is_visible,
-          original_image_url: data.original_image_url,
-          optimized_image_url: data.optimized_image_url,
-          thumbnail_image_url: data.thumbnail_image_url,
+          original_image_url: data.original_image_url || "",
+          optimized_image_url: data.optimized_image_url || "",
+          thumbnail_image_url: data.thumbnail_image_url || "",
         });
       } catch (error) {
         setError(error.message);
@@ -54,7 +76,7 @@ function AdminArtworkForm() {
     }
 
     loadArtwork();
-  }, [id]);
+  }, [id, isEditing]);
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -83,10 +105,22 @@ function AdminArtworkForm() {
       setError("");
       setSaving(true);
 
-      await updateAdminArtwork(id, {
+      const artworkData = {
         ...formData,
         image: newImage,
-      });
+      };
+
+      if (isEditing) {
+        await updateAdminArtwork(id, artworkData);
+      } else {
+        if (!newImage) {
+          throw new Error(
+            "Seleccioná una imagen para crear la obra."
+          );
+        }
+
+        await createAdminArtwork(artworkData);
+      }
 
       navigate("/admin/obras");
     } catch (error) {
@@ -108,19 +142,22 @@ function AdminArtworkForm() {
     return <p>No se encontró la obra.</p>;
   }
 
+  const currentImage =
+    formData.thumbnail_image_url ||
+    formData.optimized_image_url ||
+    formData.original_image_url;
+
   return (
     <section>
-      <h1>Editar obra</h1>
+      <h1>{isEditing ? "Editar obra" : "Nueva obra"}</h1>
 
-      <img
-        src={
-          formData.thumbnail_image_url ||
-          formData.optimized_image_url ||
-          formData.original_image_url
-        }
-        alt={formData.title}
-        width="200"
-      />
+      {isEditing && currentImage && (
+        <img
+          src={currentImage}
+          alt={formData.title}
+          width="200"
+        />
+      )}
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -131,6 +168,7 @@ function AdminArtworkForm() {
             type="text"
             value={formData.title}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -142,6 +180,7 @@ function AdminArtworkForm() {
             type="number"
             value={formData.year}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -196,7 +235,9 @@ function AdminArtworkForm() {
         </div>
 
         <div>
-          <label htmlFor="image">Reemplazar imagen</label>
+          <label htmlFor="image">
+            {isEditing ? "Reemplazar imagen" : "Imagen"}
+          </label>
 
           <input
             id="image"
@@ -204,15 +245,18 @@ function AdminArtworkForm() {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
+            required={!isEditing}
           />
 
           {newImage && (
             <p>Imagen seleccionada: {newImage.name}</p>
           )}
 
-          <p>
-            Si no seleccionás una imagen nueva, se conservará la actual.
-          </p>
+          {isEditing && (
+            <p>
+              Si no seleccionás una imagen nueva, se conservará la actual.
+            </p>
+          )}
         </div>
 
         <div>
@@ -231,7 +275,11 @@ function AdminArtworkForm() {
         {error && <p>{error}</p>}
 
         <button type="submit" disabled={saving}>
-          {saving ? "Guardando..." : "Guardar cambios"}
+          {saving
+            ? "Guardando..."
+            : isEditing
+              ? "Guardar cambios"
+              : "Crear obra"}
         </button>
       </form>
     </section>

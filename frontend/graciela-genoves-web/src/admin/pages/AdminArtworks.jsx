@@ -68,7 +68,10 @@ function AdminArtworks() {
     <section>
       <h1>Obras</h1>
 
-      <button type="button">
+      <button
+        type="button"
+        onClick={() => navigate("/admin/obras/nueva")}
+      >
         Nueva obra
       </button>
 

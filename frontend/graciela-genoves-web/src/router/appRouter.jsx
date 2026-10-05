@@ -71,6 +71,14 @@ export const appRouter = createBrowserRouter([
     ),
   },
   {
+    path: "/admin/obras/nueva",
+    element: (
+      <ProtectedRoute>
+        <AdminArtworkForm />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "/admin/obras/:id/editar",
     element: (
       <ProtectedRoute>
