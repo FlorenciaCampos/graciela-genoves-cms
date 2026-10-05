@@ -22,6 +22,7 @@ function AdminArtworkForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(null);
+  const [newImage, setNewImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -64,6 +65,17 @@ function AdminArtworkForm() {
     }));
   }
 
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+
+    if (!file) {
+      setNewImage(null);
+      return;
+    }
+
+    setNewImage(file);
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -71,7 +83,10 @@ function AdminArtworkForm() {
       setError("");
       setSaving(true);
 
-      await updateAdminArtwork(id, formData);
+      await updateAdminArtwork(id, {
+        ...formData,
+        image: newImage,
+      });
 
       navigate("/admin/obras");
     } catch (error) {
@@ -178,6 +193,26 @@ function AdminArtworkForm() {
             value={formData.order_index}
             onChange={handleChange}
           />
+        </div>
+
+        <div>
+          <label htmlFor="image">Reemplazar imagen</label>
+
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+
+          {newImage && (
+            <p>Imagen seleccionada: {newImage.name}</p>
+          )}
+
+          <p>
+            Si no seleccionás una imagen nueva, se conservará la actual.
+          </p>
         </div>
 
         <div>
