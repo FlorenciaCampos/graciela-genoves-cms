@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,10 +7,13 @@ import {
   updateArtworkVisibility,
 } from "../services/adminArtworksService";
 
+import "../styles/AdminArtworks.css";
+
 function AdminArtworks() {
   const navigate = useNavigate();
 
   const [artworks, setArtworks] = useState([]);
+  const [filter, setFilter] = useState("todas");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [updatingId, setUpdatingId] = useState(null);
@@ -56,87 +60,174 @@ function AdminArtworks() {
     }
   }
 
-  if (loading) {
-    return <p>Cargando obras...</p>;
-  }
+  const filteredArtworks = artworks.filter((artwork) => {
+    if (filter === "todas") return true;
 
-  if (error && artworks.length === 0) {
-    return <p>{error}</p>;
+    return artwork.category?.slug === filter;
+  });
+
+  const getCategoryName = (slug) => {
+    if (slug === "oleos") return "Óleo";
+    if (slug === "acuarelas") return "Acuarela";
+    return slug || "Sin categoría";
+  };
+
+  if (loading) {
+    return (
+      <main className="admin-artworks-page">
+        <p>Cargando obras...</p>
+      </main>
+    );
   }
 
   return (
-    <section>
-      <h1>Obras</h1>
+    <main className="admin-artworks-page">
+      <div className="admin-artworks-container">
+        <button
+          type="button"
+          className="admin-artworks-back"
+          onClick={() => navigate("/admin")}
+        >
+          ← Volver al panel
+        </button>
 
-      <button
-        type="button"
-        onClick={() => navigate("/admin/obras/nueva")}
-      >
-        Nueva obra
-      </button>
+        <header className="admin-artworks-header">
+          <div>
+            <p className="admin-artworks-eyebrow">
+              GRACIELA GENOVÉS · ADMIN
+            </p>
 
-      {error && <p>{error}</p>}
+            <h1>Obras</h1>
 
-      {artworks.length === 0 ? (
-        <p>No hay obras cargadas.</p>
-      ) : (
-        <div>
-          {artworks.map((artwork) => (
-            <div key={artwork.id}>
-              <img
-                src={
-                  artwork.thumbnail_image_url ||
-                  artwork.optimized_image_url ||
-                  artwork.original_image_url
-                }
-                alt={artwork.title}
-                width="120"
-              />
+            <p className="admin-artworks-description">
+              Administrá las obras de óleo y acuarela.
+            </p>
+          </div>
 
-              <h2>{artwork.title}</h2>
+          <button
+            type="button"
+            className="admin-artworks-new"
+            onClick={() => navigate("/admin/obras/nueva")}
+          >
+            + Nueva obra
+          </button>
+        </header>
 
-              <p>
-                {artwork.category?.slug === "oleos"
-                  ? "Óleo"
-                  : artwork.category?.slug === "acuarelas"
-                  ? "Acuarela"
-                  : artwork.category?.slug}
-              </p>
+        <div className="admin-artworks-toolbar">
+          <div className="admin-artworks-filters">
+            <button
+              type="button"
+              className={filter === "todas" ? "active" : ""}
+              onClick={() => setFilter("todas")}
+            >
+              Todas
+            </button>
 
-              <p>Año: {artwork.year}</p>
+            <button
+              type="button"
+              className={filter === "oleos" ? "active" : ""}
+              onClick={() => setFilter("oleos")}
+            >
+              Óleos
+            </button>
 
-              <p>Orden: {artwork.order_index}</p>
+            <button
+              type="button"
+              className={filter === "acuarelas" ? "active" : ""}
+              onClick={() => setFilter("acuarelas")}
+            >
+              Acuarelas
+            </button>
+          </div>
 
-              <p>
-                Estado:{" "}
-                {artwork.is_visible ? "Visible" : "Oculta"}
-              </p>
-
-              <button
-                type="button"
-                onClick={() =>
-                  navigate(`/admin/obras/${artwork.id}/editar`)
-                }
-              >
-                Editar
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleVisibility(artwork)}
-                disabled={updatingId === artwork.id}
-              >
-                {updatingId === artwork.id
-                  ? "Guardando..."
-                  : artwork.is_visible
-                  ? "Ocultar"
-                  : "Mostrar"}
-              </button>
-            </div>
-          ))}
+          <span className="admin-artworks-count">
+            {filteredArtworks.length} obras
+          </span>
         </div>
-      )}
-    </section>
+
+        {error && (
+          <p className="admin-artworks-error">{error}</p>
+        )}
+
+        {filteredArtworks.length === 0 ? (
+          <div className="admin-artworks-empty">
+            <p>No hay obras en esta categoría.</p>
+          </div>
+        ) : (
+          <div className="admin-artworks-grid">
+            {filteredArtworks.map((artwork) => {
+              const image =
+                artwork.thumbnail_image_url ||
+                artwork.optimized_image_url ||
+                artwork.original_image_url;
+
+              return (
+                <article
+                  className={`admin-artworks-card ${
+                    !artwork.is_visible ? "is-hidden" : ""
+                  }`}
+                  key={artwork.id}
+                >
+                  <div className="admin-artworks-image">
+                    {image && (
+                      <img src={image} alt={artwork.title} />
+                    )}
+
+                    {!artwork.is_visible && (
+                      <span className="admin-artworks-hidden-label">
+                        Oculta
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="admin-artworks-card-content">
+                    <span className="admin-artworks-category">
+                      {getCategoryName(artwork.category?.slug)}
+                    </span>
+
+                    <h2>{artwork.title}</h2>
+
+                    <p className="admin-artworks-details">
+                      {artwork.year}
+                      {artwork.technique
+                        ? ` · ${artwork.technique}`
+                        : ""}
+                    </p>
+
+                    <div className="admin-artworks-card-actions">
+                      <button
+                        type="button"
+                        className="admin-artworks-edit"
+                        onClick={() =>
+                          navigate(
+                            `/admin/obras/${artwork.id}/editar`
+                          )
+                        }
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        type="button"
+                        className="admin-artworks-visibility"
+                        onClick={() => handleVisibility(artwork)}
+                        disabled={updatingId === artwork.id}
+                      >
+                        {updatingId === artwork.id
+                          ? "Guardando..."
+                          : artwork.is_visible
+                            ? "Ocultar"
+                            : "Mostrar"}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </main>
   );
 }
 
