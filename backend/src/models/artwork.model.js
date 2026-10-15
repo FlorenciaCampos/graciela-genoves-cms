@@ -1,6 +1,25 @@
+
 // src/models/artwork.model.js
 
 import { supabaseAdmin } from "../config/supabase.js";
+
+// Obtiene el siguiente número de orden dentro de una categoría
+export const getNextOrderIndex = async (categoryId) => {
+  const { data, error } = await supabaseAdmin
+    .from("artworks")
+    .select("order_index")
+    .eq("category_id", categoryId)
+    .order("order_index", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data.length > 0
+    ? data[0].order_index + 1
+    : 1;
+};
 
 export const createArtwork = async (artworkData) => {
   const { data, error } = await supabaseAdmin

@@ -1,0 +1,346 @@
+.admin-artwork-page {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(560px, 1.15fr) minmax(360px, 0.85fr);
+    background: #f5f3ef;
+    padding: 32px;
+    gap: 24px;
+    box-sizing: border-box;
+  }
+  
+  .admin-artwork-form-panel {
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin-artwork-back {
+    align-self: flex-start;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin-bottom: 38px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+  }
+  
+  .admin-artwork-back:hover {
+    color: #000;
+  }
+  
+  .admin-artwork-header {
+    margin-bottom: 34px;
+  }
+  
+  .admin-artwork-eyebrow {
+    margin: 0 0 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #777;
+  }
+  
+  .admin-artwork-header h1 {
+    margin: 0 0 10px;
+    font-family: inherit;
+    font-size: clamp(32px, 3vw, 46px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: #161616;
+  }
+  
+  .admin-artwork-header > p:last-child {
+    margin: 0;
+    max-width: 520px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #747474;
+  }
+  
+  .admin-artwork-form {
+    width: 100%;
+    max-width: 720px;
+  }
+  
+  .admin-artwork-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  
+  .admin-artwork-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 22px;
+  }
+  
+  .admin-artwork-field label {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #222;
+  }
+  
+  .admin-artwork-field input,
+  .admin-artwork-field select {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid #d7d4cf;
+    border-radius: 3px;
+    background: #fff;
+    color: #222;
+    font: inherit;
+    font-size: 14px;
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  
+  .admin-artwork-field input:focus,
+  .admin-artwork-field select:focus {
+    border-color: #777;
+    box-shadow: 0 0 0 1px #777;
+  }
+  
+  .admin-artwork-field input::placeholder {
+    color: #aaa;
+  }
+  
+  /* Carga de imagen */
+  
+  .admin-artwork-upload {
+    min-height: 125px;
+    border: 1px dashed #bdb9b2;
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+  
+  .admin-artwork-upload:hover {
+    border-color: #666;
+    background: #faf9f7;
+  }
+  
+  .admin-artwork-upload-symbol {
+    font-size: 27px;
+    line-height: 1;
+    font-weight: 300;
+    color: #555;
+  }
+  
+  .admin-artwork-upload strong {
+    font-size: 13px;
+    font-weight: 500;
+    color: #222;
+  }
+  
+  .admin-artwork-upload span:last-child {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .admin-artwork-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Visible */
+  
+  .admin-artwork-visible {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2px 0 28px;
+    cursor: pointer;
+  }
+  
+  .admin-artwork-visible input {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    accent-color: #222;
+  }
+  
+  .admin-artwork-visible > span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .admin-artwork-visible strong {
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .admin-artwork-visible small {
+    font-size: 11px;
+    color: #888;
+  }
+  
+  /* Errores */
+  
+  .admin-artwork-error {
+    margin: 0 0 20px;
+    padding: 12px 14px;
+    border: 1px solid #c8a6a6;
+    background: #faf4f4;
+    font-size: 13px;
+  }
+  
+  /* Botones */
+  
+  .admin-artwork-actions {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .admin-artwork-actions button {
+    min-width: 145px;
+    height: 46px;
+    padding: 0 22px;
+    font: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .admin-artwork-submit {
+    border: 1px solid #171717;
+    background: #171717;
+    color: #fff;
+  }
+  
+  .admin-artwork-submit:hover:not(:disabled) {
+    background: #333;
+  }
+  
+  .admin-artwork-cancel {
+    border: 1px solid #bbb7b0;
+    background: transparent;
+    color: #333;
+  }
+  
+  .admin-artwork-cancel:hover:not(:disabled) {
+    border-color: #333;
+  }
+  
+  .admin-artwork-actions button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  
+  /* Imagen lateral */
+  
+  .admin-artwork-image-panel {
+    position: relative;
+    min-height: calc(100vh - 64px);
+    overflow: hidden;
+    border-radius: 4px;
+    background: #ddd;
+  }
+  
+  .admin-artwork-image-panel > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  /* Cargando */
+  
+  .admin-artwork-loading {
+    padding: 40px;
+  }
+  
+  /* Tablet */
+  
+  @media (max-width: 1050px) {
+    .admin-artwork-page {
+      grid-template-columns: minmax(500px, 1.3fr) 0.7fr;
+      padding: 20px;
+      gap: 16px;
+    }
+  
+    .admin-artwork-form-panel {
+      padding: 40px;
+    }
+  
+    .admin-artwork-image-panel {
+      min-height: calc(100vh - 40px);
+    }
+  }
+  
+  /* Celular */
+  
+  @media (max-width: 800px) {
+    .admin-artwork-page {
+      display: flex;
+      flex-direction: column-reverse;
+      padding: 0;
+      gap: 0;
+      background: #fff;
+    }
+  
+    .admin-artwork-image-panel {
+      width: 100%;
+      min-height: 0;
+      height: 230px;
+      border-radius: 0;
+    }
+  
+    .admin-artwork-image-panel > img {
+      object-position: center;
+    }
+  
+    .admin-artwork-form-panel {
+      border-radius: 0;
+      padding: 32px 22px 48px;
+    }
+  
+    .admin-artwork-back {
+      margin-bottom: 28px;
+    }
+  
+    .admin-artwork-header {
+      margin-bottom: 28px;
+    }
+  
+    .admin-artwork-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  
+    .admin-artwork-form {
+      max-width: none;
+    }
+  
+    .admin-artwork-actions {
+      flex-direction: column;
+    }
+  
+    .admin-artwork-actions button {
+      width: 100%;
+    }
+  }
