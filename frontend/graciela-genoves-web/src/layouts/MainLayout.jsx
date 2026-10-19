@@ -1,5 +1,6 @@
 
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+
 import {
   FaInstagram,
   FaFacebookF,
@@ -8,14 +9,10 @@ import {
 
 import "../styles/MainLayout.css";
 import firmaNegra from "../assets/firma-negra.png";
-import bioImage from "../assets/sobreMi.jpg";
 import useLanguage from "../context/useLanguage";
 
 function MainLayout() {
   const { language, changeLanguage } = useLanguage();
-  const location = useLocation();
-
-  const isAboutPage = location.pathname === "/acerca-de-mi";
 
   const texts = {
     es: {
@@ -28,6 +25,7 @@ function MainLayout() {
       developedBy: "Desarrollado por",
       signatureAlt: "Firma de Graciela Genovés",
     },
+
     en: {
       works: "works",
       oils: "oils",
@@ -44,7 +42,10 @@ function MainLayout() {
 
   return (
     <div className="main-layout">
+
+      {/* HEADER / MENÚ LATERAL */}
       <header className="main-layout__header">
+
         <Link
           to="/"
           className="main-layout__signature-link"
@@ -65,14 +66,20 @@ function MainLayout() {
         </Link>
 
         <nav className="main-layout__nav">
+
           <div className="main-layout__nav-group">
             <span className="main-layout__nav-label">
               {t.works}
             </span>
 
             <div className="main-layout__submenu">
-              <Link to="/oleos">{t.oils}</Link>
-              <Link to="/acuarelas">{t.watercolors}</Link>
+              <Link to="/oleos">
+                {t.oils}
+              </Link>
+
+              <Link to="/acuarelas">
+                {t.watercolors}
+              </Link>
             </div>
           </div>
 
@@ -88,6 +95,7 @@ function MainLayout() {
             {t.contact}
           </Link>
 
+          {/* SELECTOR DE IDIOMA */}
           <div
             className="main-layout__language"
             aria-label="Seleccionar idioma"
@@ -118,25 +126,18 @@ function MainLayout() {
               EN
             </button>
           </div>
-        </nav>
 
-        {/* FOTO VERTICAL SOLO EN ACERCA DE MÍ */}
-        {isAboutPage && (
-          <div className="main-layout__portrait">
-            <img
-              src={bioImage}
-              alt="Graciela Genovés"
-              className="main-layout__portrait-image"
-            />
-          </div>
-        )}
+        </nav>
       </header>
 
+      {/* CONTENIDO DE CADA PÁGINA */}
       <main className="main-layout__content">
         <Outlet />
       </main>
 
+      {/* FOOTER */}
       <footer className="main-layout__footer">
+
         <div className="main-layout__socials">
           <a
             href="https://www.instagram.com/gracielagenoves/"
@@ -180,6 +181,7 @@ function MainLayout() {
             </a>
           </span>
         </div>
+
       </footer>
     </div>
   );

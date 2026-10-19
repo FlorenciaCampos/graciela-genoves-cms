@@ -1,6 +1,7 @@
 
 import "../styles/Bio.css";
 import useLanguage from "../context/useLanguage";
+import sobreMi from "../assets/sobreMi.jpg";
 
 const biography = {
   es: [
@@ -42,57 +43,129 @@ const biography = {
 
 function Bio() {
   const { language } = useLanguage();
-
   const isEnglish = language === "en";
+
+  const paragraphs = biography[isEnglish ? "en" : "es"];
+
+  const introduction = paragraphs.slice(0, 5);
+  const trajectory = paragraphs.slice(5);
 
   return (
     <section className="bio">
       <div className="bio__content">
+
+        {/* ENCABEZADO */}
 
         <h1 className="bio__title">
           {isEnglish ? "About me" : "Sobre mí"}
         </h1>
 
         {/* DOCUMENTOS Y BLOG */}
-        <div className="bio__documents">
 
+        <nav
+          className="bio__documents"
+          aria-label={
+            isEnglish
+              ? "Artist documents"
+              : "Documentos de la artista"
+          }
+        >
           <a
             href="/cv-graciela-genoves.pdf"
             download
             className="bio__document"
           >
-            <span>CV</span>
-            <span className="bio__document-icon">↓</span>
+            CV
+            <span
+              className="bio__document-icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
           </a>
 
-          <span className="bio__document bio__document--pending">
+          <a
+            href="/Statement-graciela-genoves.pdf"
+            download
+            className="bio__document"
+          >
             Statement
-          </span>
+            <span
+              className="bio__document-icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+          </a>
 
-          <span className="bio__document bio__document--pending">
+          <a
+            href="/El%20color%20y%20yo-graciela-genoves.pdf"
+            download
+            className="bio__document"
+          >
             {isEnglish ? "Writings" : "Escritos"}
-          </span>
+            <span
+              className="bio__document-icon"
+              aria-hidden="true"
+            >
+              ↓
+            </span>
+          </a>
 
-          {/* BLOG: pendiente de incorporar URL */}
-          <span className="bio__document bio__document--pending">
+          <a
+            href="https://purapinturapura.blogspot.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bio__document"
+          >
             Blog
-          </span>
+          </a>
+        </nav>
 
-        </div>
+        {/* LÍNEA DIVISORIA */}
 
         <div className="bio__line" />
 
-        {/* BIOGRAFÍA */}
-        <div className="bio__text">
-          <h2 className="bio__subtitle">
-            Graciela Genovés
+        {/* PRIMERA PARTE: FOTO Y PRESENTACIÓN */}
+
+        <div className="bio__body">
+
+          <div className="bio__image-container">
+            <img
+              src={sobreMi}
+              alt={
+                isEnglish
+                  ? "Portrait of Graciela Genovés"
+                  : "Retrato de Graciela Genovés"
+              }
+              className="bio__image"
+            />
+          </div>
+
+          <div className="bio__text bio__introduction">
+            <h2 className="bio__subtitle">
+              Graciela Genovés
+            </h2>
+
+            {introduction.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+
+        </div>
+
+        {/* SEGUNDA PARTE: TRAYECTORIA */}
+
+        <div className="bio__trajectory">
+          <h2 className="bio__trajectory-title">
+            {isEnglish ? "Trajectory" : "Trayectoria"}
           </h2>
 
-          {biography[isEnglish ? "en" : "es"].map(
-            (paragraph, index) => (
+          <div className="bio__text bio__trajectory-text">
+            {trajectory.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
-            )
-          )}
+            ))}
+          </div>
         </div>
 
       </div>

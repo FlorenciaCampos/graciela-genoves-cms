@@ -1,4 +1,8 @@
 
+/* ======================================
+   SOBRE MÍ - GRACIELA GENOVÉS
+====================================== */
+
 .bio {
   min-height: 100vh;
   padding-left: 185px;
@@ -11,50 +15,49 @@
   font-family: "Roboto Condensed", sans-serif;
 }
 
-/* CONTENIDO PRINCIPAL */
+/* ======================================
+   CONTENEDOR PRINCIPAL
+====================================== */
 
 .bio__content {
   width: calc(100% - 100px);
-  max-width: 1100px;
+  max-width: 1320px;
 
   margin: 0 50px;
-  padding: 125px 0 80px;
+  padding: 125px 0 90px;
 
   box-sizing: border-box;
 }
 
-/* TÍTULO SOBRE MÍ */
+/* ======================================
+   TÍTULO
+====================================== */
 
 .bio__title {
-  margin: 0 0 42px;
+  margin: 0 0 35px;
 
   font-size: 38px;
   font-weight: 400;
   line-height: 1.2;
 }
 
-/* DOCUMENTOS Y BLOG */
+/* ======================================
+   DOCUMENTOS Y BLOG
+====================================== */
 
 .bio__documents {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
-  gap: 35px;
-
-  margin-bottom: 38px;
+  gap: 40px;
+  margin-bottom: 35px;
 }
 
 .bio__document {
   display: inline-flex;
   align-items: center;
-
   gap: 10px;
-
-  min-width: 0;
-  padding: 0;
-
-  border: none;
 
   color: #303030;
   text-decoration: none;
@@ -65,62 +68,134 @@
   transition: opacity 0.2s ease;
 }
 
-a.bio__document:hover {
+.bio__document:hover {
   opacity: 0.55;
 }
 
-/* ÍCONO DE DESCARGA */
+.bio__document:focus-visible {
+  outline: 2px solid #303030;
+  outline-offset: 5px;
+}
 
 .bio__document-icon {
   font-size: 17px;
   line-height: 1;
 }
 
-/* DOCUMENTOS PENDIENTES */
-
-.bio__document--pending {
-  color: #777;
-  cursor: default;
-}
-
-/* LÍNEA DIVISORIA */
+/* ======================================
+   LÍNEA DIVISORIA
+====================================== */
 
 .bio__line {
   width: 100%;
   height: 1px;
 
-  margin-bottom: 50px;
+  margin-bottom: 55px;
 
   background: #b8b8b8;
 }
 
-/* BIOGRAFÍA */
+/* ======================================
+   FOTO + PRESENTACIÓN
+====================================== */
 
-.bio__subtitle {
-  margin: 0 0 30px;
+.bio__body {
+  display: grid;
 
-  font-size: 25px;
-  font-weight: 400;
+  grid-template-columns:
+    minmax(340px, 430px)
+    minmax(0, 1fr);
+
+  align-items: start;
+
+  column-gap: clamp(40px, 5vw, 75px);
+  width: 100%;
 }
 
-/* TEXTO DE LA BIOGRAFÍA */
+/* ======================================
+   FOTOGRAFÍA
+====================================== */
+
+.bio__image-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.bio__image {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  aspect-ratio: 3 / 4;
+
+  object-fit: cover;
+  object-position: center top;
+
+  border-radius: 8px;
+}
+
+/* ======================================
+   TEXTO
+====================================== */
 
 .bio__text {
   width: 100%;
-  max-width: none;
+  max-width: 700px;
 
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+.bio__subtitle {
+  margin: 0 0 28px;
+
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 .bio__text p {
   margin: 0 0 24px;
 }
 
-/* TABLET */
+.bio__text p:last-child {
+  margin-bottom: 0;
+}
 
-@media (max-width: 1100px) {
+/* ======================================
+   TRAYECTORIA
+====================================== */
+
+.bio__trajectory {
+  width: 100%;
+  max-width: 1050px;
+
+  margin-top: 65px;
+}
+
+.bio__trajectory-title {
+  margin: 0 0 28px;
+
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.bio__trajectory-text {
+  max-width: 950px;
+}
+
+.bio__trajectory-text p {
+  margin-bottom: 24px;
+}
+
+/* ======================================
+   TABLET GRANDE
+====================================== */
+
+@media (max-width: 1180px) {
   .bio {
     padding-left: 165px;
   }
@@ -139,9 +214,50 @@ a.bio__document:hover {
   .bio__documents {
     gap: 25px;
   }
+
+  .bio__body {
+    grid-template-columns:
+      minmax(280px, 340px)
+      minmax(0, 1fr);
+
+    column-gap: 35px;
+  }
+
+  .bio__text {
+    font-size: 16px;
+  }
+
+  .bio__trajectory {
+    margin-top: 55px;
+  }
 }
 
-/* CELULAR */
+/* ======================================
+   TABLET
+====================================== */
+
+@media (min-width: 769px) and (max-width: 920px) {
+  .bio__body {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 35px;
+  }
+
+  .bio__image-container {
+    max-width: 360px;
+  }
+
+  .bio__introduction {
+    max-width: 700px;
+  }
+
+  .bio__trajectory {
+    margin-top: 50px;
+  }
+}
+
+/* ======================================
+   MOBILE
+====================================== */
 
 @media (max-width: 768px) {
   .bio {
@@ -149,13 +265,11 @@ a.bio__document:hover {
     padding-left: 0;
   }
 
-  /* CONTENIDO */
-
   .bio__content {
-    width: auto;
+    width: 100%;
 
     margin: 0;
-    padding: 35px 20px 60px;
+    padding: 35px 20px 65px;
   }
 
   /* TÍTULO */
@@ -165,46 +279,105 @@ a.bio__document:hover {
     font-size: 32px;
   }
 
-  /* DOCUMENTOS Y BLOG */
+  /* DOCUMENTOS */
 
   .bio__documents {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
 
     gap: 24px 18px;
-
     margin-bottom: 35px;
   }
 
   .bio__document {
-    min-width: 0;
-    width: 100%;
-
     font-size: 14px;
   }
 
-  /* LÍNEA DIVISORIA */
+  /* LÍNEA */
 
   .bio__line {
     margin-bottom: 35px;
   }
 
-  /* BIOGRAFÍA */
+  /* FOTO Y PRESENTACIÓN */
 
-  .bio__subtitle {
-    margin-bottom: 24px;
-    font-size: 23px;
+  .bio__body {
+    display: flex;
+    flex-direction: column;
+
+    gap: 35px;
   }
+
+  .bio__image-container {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .bio__image {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 3 / 4;
+
+    object-fit: cover;
+    object-position: center top;
+
+    border-radius: 8px;
+  }
+
+  /* TEXTO */
 
   .bio__text {
     width: 100%;
-    max-width: none;
+    max-width: 100%;
 
     font-size: 15px;
-    line-height: 1.65;
+    line-height: 1.7;
+  }
+
+  .bio__subtitle {
+    margin-bottom: 24px;
+    font-size: 24px;
   }
 
   .bio__text p {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+  }
+
+  /* TRAYECTORIA */
+
+  .bio__trajectory {
+    max-width: 100%;
+    margin-top: 45px;
+  }
+
+  .bio__trajectory-title {
+    margin-bottom: 24px;
+    font-size: 24px;
+  }
+}
+
+/* ======================================
+   CELULARES PEQUEÑOS
+====================================== */
+
+@media (max-width: 390px) {
+  .bio__content {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .bio__title {
+    font-size: 30px;
+  }
+
+  .bio__documents {
+    column-gap: 12px;
+  }
+
+  .bio__text {
+    font-size: 14px;
   }
 }
