@@ -151,11 +151,11 @@ function Home() {
             <span>
               {t.developedBy}{" "}
               <a
-                href="https://www.instagram.com/pasaje_studio/"
+                href="https://www.instagram.com/flor_bellas.artes/"
                 target="_blank"
                 rel="noreferrer"
               >
-                pasaje_studio
+                Florencia Campos
               </a>
             </span>
           </div>
