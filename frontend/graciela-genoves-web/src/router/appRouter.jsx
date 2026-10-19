@@ -41,7 +41,7 @@ export const appRouter = createBrowserRouter([
         element: <Exhibiciones />,
       },
       {
-        path: "/bio",
+        path: "/acerca-de-mi",
         element: <Bio />,
       },
       {

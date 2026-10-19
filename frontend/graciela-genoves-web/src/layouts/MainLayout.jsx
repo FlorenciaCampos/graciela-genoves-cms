@@ -1,4 +1,5 @@
-import { Link, Outlet } from "react-router-dom";
+
+import { Link, Outlet, useLocation } from "react-router-dom";
 import {
   FaInstagram,
   FaFacebookF,
@@ -7,10 +8,14 @@ import {
 
 import "../styles/MainLayout.css";
 import firmaNegra from "../assets/firma-negra.png";
+import bioImage from "../assets/sobreMi.jpg";
 import useLanguage from "../context/useLanguage";
 
 function MainLayout() {
   const { language, changeLanguage } = useLanguage();
+  const location = useLocation();
+
+  const isAboutPage = location.pathname === "/acerca-de-mi";
 
   const texts = {
     es: {
@@ -114,6 +119,17 @@ function MainLayout() {
             </button>
           </div>
         </nav>
+
+        {/* FOTO VERTICAL SOLO EN ACERCA DE MÍ */}
+        {isAboutPage && (
+          <div className="main-layout__portrait">
+            <img
+              src={bioImage}
+              alt="Graciela Genovés"
+              className="main-layout__portrait-image"
+            />
+          </div>
+        )}
       </header>
 
       <main className="main-layout__content">

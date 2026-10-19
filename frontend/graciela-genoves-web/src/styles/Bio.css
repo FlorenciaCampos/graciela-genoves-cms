@@ -1,161 +1,210 @@
+
 .bio {
-    min-height: 100vh;
-  
-    padding-left: 185px;
-  
-    box-sizing: border-box;
-  
-    background: #fff;
-    color: #303030;
-  
-    font-family: "Roboto Condensed", sans-serif;
+  min-height: 100vh;
+  padding-left: 185px;
+
+  box-sizing: border-box;
+
+  background: #fff;
+  color: #303030;
+
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.bio__content {
+  width: calc(100% - 100px);
+  max-width: 1100px;
+
+  margin: 0 50px;
+  padding: 125px 0 80px;
+
+  box-sizing: border-box;
+}
+
+/* TÍTULO SOBRE MÍ */
+
+.bio__title {
+  margin: 0 0 42px;
+
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* DOCUMENTOS Y BLOG */
+
+.bio__documents {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 35px;
+
+  margin-bottom: 38px;
+}
+
+.bio__document {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+  padding: 0;
+
+  border: none;
+
+  color: #303030;
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  transition: opacity 0.2s ease;
+}
+
+a.bio__document:hover {
+  opacity: 0.55;
+}
+
+/* ÍCONO DE DESCARGA */
+
+.bio__document-icon {
+  font-size: 17px;
+  line-height: 1;
+}
+
+/* DOCUMENTOS PENDIENTES */
+
+.bio__document--pending {
+  color: #777;
+  cursor: default;
+}
+
+/* LÍNEA DIVISORIA */
+
+.bio__line {
+  width: 100%;
+  height: 1px;
+
+  margin-bottom: 50px;
+
+  background: #b8b8b8;
+}
+
+/* BIOGRAFÍA */
+
+.bio__subtitle {
+  margin: 0 0 30px;
+
+  font-size: 25px;
+  font-weight: 400;
+}
+
+/* TEXTO DE LA BIOGRAFÍA */
+
+.bio__text {
+  width: 100%;
+  max-width: none;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.bio__text p {
+  margin: 0 0 24px;
+}
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+  .bio {
+    padding-left: 165px;
   }
-  
-  /* FOTO */
-  
-  .bio__hero {
-    width: 100%;
-    height: 430px;
-  
-    overflow: hidden;
-  }
-  
-  .bio__hero-image {
-    display: block;
-  
-    width: 100%;
-    height: 100%;
-  
-    object-fit: cover;
-    object-position: center;
-  }
-  
-  /* CONTENIDO */
-  
+
   .bio__content {
-    width: calc(100% - 80px);
-  
-    margin-left: 40px;
-    margin-right: 40px;
-  
-    padding: 34px 0 70px;
-  
-    box-sizing: border-box;
+    width: calc(100% - 60px);
+
+    margin: 0 30px;
+    padding-top: 110px;
   }
-  
-  /* DESCARGA CV */
-  
-  .bio__cv-row {
-    display: flex;
-    justify-content: flex-end;
-  
-    margin-bottom: 18px;
+
+  .bio__title {
+    font-size: 34px;
   }
-  
-  .bio__cv-link {
-    color: #303030;
-  
-    font-size: 13px;
-    font-weight: 500;
-  
-    text-decoration: none;
-  
-    transition: opacity 0.2s ease;
+
+  .bio__documents {
+    gap: 25px;
   }
-  
-  .bio__cv-link:hover {
-    opacity: 0.55;
+}
+
+/* CELULAR */
+
+@media (max-width: 768px) {
+  .bio {
+    min-height: auto;
+    padding-left: 0;
   }
-  
-  /* LÍNEA */
-  
-  .bio__line {
-    width: 100%;
-    height: 1px;
-  
+
+  /* CONTENIDO */
+
+  .bio__content {
+    width: auto;
+
+    margin: 0;
+    padding: 35px 20px 60px;
+  }
+
+  /* TÍTULO */
+
+  .bio__title {
+    margin-bottom: 30px;
+    font-size: 32px;
+  }
+
+  /* DOCUMENTOS Y BLOG */
+
+  .bio__documents {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 24px 18px;
+
     margin-bottom: 35px;
-  
-    background: #555;
   }
-  
-  /* TEXTO */
-  
+
+  .bio__document {
+    min-width: 0;
+    width: 100%;
+
+    font-size: 14px;
+  }
+
+  /* LÍNEA DIVISORIA */
+
+  .bio__line {
+    margin-bottom: 35px;
+  }
+
+  /* BIOGRAFÍA */
+
+  .bio__subtitle {
+    margin-bottom: 24px;
+    font-size: 23px;
+  }
+
   .bio__text {
     width: 100%;
-  
-    font-size: 16px;
-    font-weight: 400;
+    max-width: none;
+
+    font-size: 15px;
     line-height: 1.65;
   }
-  
+
   .bio__text p {
-    margin: 0 0 22px;
+    margin-bottom: 20px;
   }
-  
-  /* TABLET */
-  
-  @media (max-width: 1100px) {
-    .bio {
-      padding-left: 165px;
-    }
-  
-    .bio__hero {
-      height: 380px;
-    }
-  
-    .bio__content {
-      width: calc(100% - 60px);
-  
-      margin-left: 30px;
-      margin-right: 30px;
-    }
-  }
-  
-  /* CELULAR */
-  
-  @media (max-width: 768px) {
-    .bio {
-      padding-left: 0;
-    }
-  
-    .bio__hero {
-      height: 310px;
-    }
-  
-    .bio__hero-image {
-      object-position: center;
-    }
-  
-    .bio__content {
-      width: auto;
-  
-      margin: 0;
-  
-      padding: 26px 20px 50px;
-    }
-  
-    .bio__cv-row {
-      justify-content: flex-start;
-  
-      margin-bottom: 16px;
-    }
-  
-    .bio__cv-link {
-      font-size: 13px;
-    }
-  
-    .bio__line {
-      margin-bottom: 26px;
-    }
-  
-    .bio__text {
-      width: 100%;
-  
-      font-size: 15px;
-      line-height: 1.6;
-    }
-  
-    .bio__text p {
-      margin-bottom: 20px;
-    }
-  }
+}
