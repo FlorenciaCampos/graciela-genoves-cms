@@ -1,0 +1,282 @@
+
+/* PANEL DE ADMINISTRACIÓN */
+
+.admin-dashboard {
+    min-height: 100vh;
+    background: #faf9f6;
+    color: #1c1c1c;
+  
+    padding: 48px 6% 90px;
+    box-sizing: border-box;
+  
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  
+  .admin-dashboard__container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  
+  /* VOLVER AL SITIO */
+  
+  .admin-dashboard__back {
+    display: inline-block;
+  
+    margin-bottom: 60px;
+    padding: 0;
+  
+    color: #666;
+    font-family: inherit;
+    font-size: 14px;
+    text-decoration: none;
+  
+    transition: color 0.2s ease;
+  }
+  
+  .admin-dashboard__back:hover {
+    color: #111;
+  }
+  
+  /* ENCABEZADO */
+  
+  .admin-dashboard__header {
+    margin-bottom: 55px;
+  }
+  
+  .admin-dashboard__eyebrow {
+    margin: 0 0 15px;
+  
+    color: #777;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+  }
+  
+  .admin-dashboard__header h1 {
+    margin: 0 0 15px;
+  
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  
+  .admin-dashboard__description {
+    margin: 0;
+  
+    color: #777;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  
+  /* GRILLA */
+  
+  .admin-dashboard__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  
+    gap: 28px;
+  
+    padding-top: 40px;
+    border-top: 1px solid #dedbd6;
+  }
+  
+  /* TARJETAS */
+  
+  .admin-dashboard__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  
+    min-width: 0;
+    min-height: 245px;
+  
+    padding: 38px 42px;
+    box-sizing: border-box;
+  
+    background: transparent;
+    border: 1px solid #dedbd6;
+    border-radius: 6px;
+  
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  
+  .admin-dashboard__card:hover {
+    border-color: #bdb9b2;
+    background: #fff;
+  }
+  
+  /* TÍTULOS */
+  
+  .admin-dashboard__card h2 {
+    margin: 0 0 14px;
+  
+    color: #1c1c1c;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+  
+  /* DESCRIPCIÓN */
+  
+  .admin-dashboard__card p {
+    margin: 0 0 28px;
+  
+    max-width: 420px;
+  
+    color: #777;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  
+  /* BOTÓN PRINCIPAL */
+  
+  .admin-dashboard__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    gap: 28px;
+    margin-top: auto;
+  
+    padding: 15px 24px;
+  
+    background: #1c1c1c;
+    border: 1px solid #1c1c1c;
+    border-radius: 0;
+  
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+  
+    cursor: pointer;
+  
+    transition: background-color 0.2s ease;
+  }
+  
+  .admin-dashboard__button:link,
+  .admin-dashboard__button:visited {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .admin-dashboard__button:hover {
+    background: #444;
+  }
+  
+  .admin-dashboard__button span {
+    font-size: 19px;
+    line-height: 1;
+  }
+  
+  /* SECCIONES PENDIENTES */
+  
+  .admin-dashboard__pending {
+    display: inline-block;
+  
+    margin-top: auto;
+    padding: 13px 20px;
+  
+    border: 1px solid #dedbd6;
+  
+    color: #999;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.4;
+  
+    cursor: default;
+  }
+  
+  /* TABLET */
+  
+  @media (max-width: 1000px) {
+    .admin-dashboard__card {
+      padding: 32px;
+      min-height: 260px;
+    }
+  
+    .admin-dashboard__card h2 {
+      font-size: 28px;
+    }
+  
+    .admin-dashboard__card p {
+      font-size: 15px;
+    }
+  }
+  
+  /* CELULAR */
+  
+  @media (max-width: 650px) {
+    .admin-dashboard {
+      min-height: 100vh;
+      padding: 30px 5% 60px;
+    }
+  
+    .admin-dashboard__back {
+      margin-bottom: 40px;
+    }
+  
+    .admin-dashboard__header {
+      margin-bottom: 35px;
+    }
+  
+    .admin-dashboard__header h1 {
+      font-size: 42px;
+      line-height: 1.1;
+    }
+  
+    .admin-dashboard__description {
+      font-size: 15px;
+    }
+  
+    .admin-dashboard__grid {
+      grid-template-columns: 1fr;
+  
+      gap: 18px;
+  
+      padding-top: 28px;
+    }
+  
+    .admin-dashboard__card {
+      min-height: auto;
+      padding: 28px 25px;
+    }
+  
+    .admin-dashboard__card h2 {
+      margin-bottom: 12px;
+      font-size: 27px;
+    }
+  
+    .admin-dashboard__card p {
+      margin-bottom: 25px;
+      font-size: 15px;
+    }
+  
+    .admin-dashboard__button {
+      padding: 14px 22px;
+      font-size: 13px;
+    }
+  
+    .admin-dashboard__pending {
+      padding: 12px 18px;
+    }
+  }
+  
+  /* CELULARES PEQUEÑOS */
+  
+  @media (max-width: 380px) {
+    .admin-dashboard__header h1 {
+      font-size: 36px;
+    }
+  
+    .admin-dashboard__card {
+      padding: 25px 20px;
+    }
+  }
+  
