@@ -1,7 +1,11 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { loginAdmin } from "../../services/api";
+import loginImage from "../../assets/login.jpg";
+
+import "../styles/AdminLogin.css";
 
 function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -20,9 +24,12 @@ function AdminLogin() {
     try {
       const data = await loginAdmin(email, password);
 
-      localStorage.setItem("admin_token", data.access_token);
+      localStorage.setItem(
+        "admin_token",
+        data.access_token
+      );
 
-      navigate("/admin");
+      navigate("/admin", { replace: true });
     } catch (error) {
       setError(error.message);
     } finally {
@@ -31,40 +38,90 @@ function AdminLogin() {
   };
 
   return (
-    <main>
-      <h1>Administrador</h1>
+    <main
+      className="admin-login"
+      style={{
+        backgroundImage: `url(${loginImage})`,
+      }}
+    >
+      <div className="admin-login__overlay" />
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
+      <section className="admin-login__card">
+        <p className="admin-login__eyebrow">
+          GRACIELA GENOVÉS
+        </p>
 
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </div>
+        <h1>Administración</h1>
 
-        <div>
-          <label htmlFor="password">Contraseña</label>
+        <p className="admin-login__description">
+          Ingresá para administrar tu sitio web.
+        </p>
 
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </div>
+        <form
+          className="admin-login__form"
+          onSubmit={handleSubmit}
+        >
+          <div className="admin-login__field">
+            <label htmlFor="email">
+              Correo electrónico
+            </label>
 
-        {error && <p>{error}</p>}
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(event) =>
+                setEmail(event.target.value)
+              }
+              placeholder="Ingresá tu correo"
+              autoComplete="username"
+              required
+            />
+          </div>
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Ingresando..." : "Ingresar"}
-        </button>
-      </form>
+          <div className="admin-login__field">
+            <label htmlFor="password">
+              Contraseña
+            </label>
+
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(event) =>
+                setPassword(event.target.value)
+              }
+              placeholder="Ingresá tu contraseña"
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          {error && (
+            <p
+              className="admin-login__error"
+              role="alert"
+            >
+              {error}
+            </p>
+          )}
+
+          <button
+            className="admin-login__submit"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Ingresando..." : "Ingresar"}
+          </button>
+        </form>
+
+        <Link
+          to="/"
+          className="admin-login__back"
+        >
+          ← Volver al sitio
+        </Link>
+      </section>
     </main>
   );
 }
