@@ -1,4 +1,7 @@
+
 const API_URL = import.meta.env.VITE_API_URL;
+
+// OBTENER TODAS LAS OBRAS DEL ADMIN
 
 export async function getAdminArtworks() {
   const token = localStorage.getItem("admin_token");
@@ -19,6 +22,8 @@ export async function getAdminArtworks() {
 
   return result.data;
 }
+
+// MOSTRAR U OCULTAR UNA OBRA
 
 export async function updateArtworkVisibility(id, isVisible) {
   const token = localStorage.getItem("admin_token");
@@ -45,6 +50,8 @@ export async function updateArtworkVisibility(id, isVisible) {
   return result.data;
 }
 
+// OBTENER UNA OBRA POR ID
+
 export async function getAdminArtworkById(id) {
   const token = localStorage.getItem("admin_token");
 
@@ -65,6 +72,8 @@ export async function getAdminArtworkById(id) {
   return result.data;
 }
 
+// EDITAR UNA OBRA
+
 export async function updateAdminArtwork(id, artworkData) {
   const token = localStorage.getItem("admin_token");
 
@@ -75,11 +84,12 @@ export async function updateAdminArtwork(id, artworkData) {
   formData.append("technique", artworkData.technique);
   formData.append("dimensions", artworkData.dimensions);
   formData.append("category_id", artworkData.category_id);
-  formData.append("order_index", artworkData.order_index);
   formData.append("is_visible", String(artworkData.is_visible));
 
-  // Si se seleccionó una imagen nueva, la enviamos al backend.
-  // Si no, la imagen actual se conserva.
+  // El orden se conserva automáticamente.
+  // No enviamos order_index al backend.
+
+  // Solo reemplazamos la imagen si se seleccionó una nueva.
   if (artworkData.image) {
     formData.append("image", artworkData.image);
   }
@@ -103,6 +113,8 @@ export async function updateAdminArtwork(id, artworkData) {
   return result.data;
 }
 
+// CREAR UNA OBRA NUEVA
+
 export async function createAdminArtwork(artworkData) {
   const token = localStorage.getItem("admin_token");
 
@@ -113,8 +125,10 @@ export async function createAdminArtwork(artworkData) {
   formData.append("technique", artworkData.technique);
   formData.append("dimensions", artworkData.dimensions);
   formData.append("category_id", artworkData.category_id);
-  formData.append("order_index", artworkData.order_index);
   formData.append("is_visible", String(artworkData.is_visible));
+
+  // El backend asigna automáticamente el siguiente orden.
+  // No enviamos order_index.
 
   if (artworkData.image) {
     formData.append("image", artworkData.image);
