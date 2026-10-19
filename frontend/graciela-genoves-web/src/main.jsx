@@ -1,6 +1,8 @@
+
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 
 import "./index.css";
 import { appRouter } from "./router/appRouter";
@@ -10,6 +12,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <LanguageProvider>
       <RouterProvider router={appRouter} />
+      <Analytics />
     </LanguageProvider>
   </StrictMode>
 );
