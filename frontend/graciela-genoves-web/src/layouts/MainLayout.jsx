@@ -177,7 +177,7 @@ function MainLayout() {
               target="_blank"
               rel="noreferrer"
             >
-              pasaje_studio
+              Florencia Campos
             </a>
           </span>
         </div>
