@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -37,48 +37,85 @@ const EMPTY_FORM = {
 function AdminArtworkForm() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const previewUrlRef = useRef(null);
 
   const isEditing = Boolean(id);
 
   const [formData, setFormData] = useState(
     isEditing ? null : { ...EMPTY_FORM }
   );
+
   const [newImage, setNewImage] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
   const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  // CARGAR OBRA PARA EDITAR
+
   useEffect(() => {
-    if (!isEditing) {
-      return;
-    }
+    if (!isEditing) return;
+
+    let active = true;
 
     async function loadArtwork() {
       try {
+        setLoading(true);
         setError("");
 
         const data = await getAdminArtworkById(id);
+
+        if (!active) return;
 
         setFormData({
           title: data.title || "",
           year: data.year ?? "",
           technique: data.technique || "",
           dimensions: data.dimensions || "",
-          category_id: data.category_id || CATEGORIES[0].id,
-          is_visible: data.is_visible,
-          original_image_url: data.original_image_url || "",
-          optimized_image_url: data.optimized_image_url || "",
-          thumbnail_image_url: data.thumbnail_image_url || "",
+          category_id:
+            data.category_id || CATEGORIES[0].id,
+          is_visible: data.is_visible ?? true,
+          original_image_url:
+            data.original_image_url || "",
+          optimized_image_url:
+            data.optimized_image_url || "",
+          thumbnail_image_url:
+            data.thumbnail_image_url || "",
         });
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        if (active) setError(err.message);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     }
 
     loadArtwork();
+
+    return () => {
+      active = false;
+    };
   }, [id, isEditing]);
+
+  // LIBERAR LA VISTA PREVIA AL SALIR DEL FORMULARIO
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    };
+  }, []);
+
+  function clearPreview() {
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+      previewUrlRef.current = null;
+    }
+    setPreviewUrl(null);
+  }
+
+  // MODIFICAR CAMPOS
 
   function handleChange(event) {
     const { name, value, type, checked } = event.target;
@@ -89,19 +126,46 @@ function AdminArtworkForm() {
     }));
   }
 
-  function handleImageChange(event) {
-    const file = event.target.files[0];
+  // SELECCIONAR IMAGEN
 
-    if (!file) {
-      setNewImage(null);
+  function handleImageChange(event) {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("Seleccioná un archivo de imagen válido.");
+      event.target.value = "";
       return;
     }
 
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+    }
+    const objectUrl = URL.createObjectURL(file);
+    previewUrlRef.current = objectUrl;
+    setPreviewUrl(objectUrl);
     setNewImage(file);
+    setError("");
   }
+
+  // CANCELAR SELECCIÓN DE IMAGEN
+
+  function handleCancelImage() {
+    setNewImage(null);
+    clearPreview();
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
+
+  // GUARDAR CAMBIOS
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (saving) return;
 
     try {
       setError("");
@@ -116,17 +180,19 @@ function AdminArtworkForm() {
         await updateAdminArtwork(id, artworkData);
       } else {
         if (!newImage) {
-          throw new Error(
-            "Seleccioná una imagen para crear la obra."
-          );
+          throw new Error("Seleccioná una imagen para crear la obra.");
         }
-
         await createAdminArtwork(artworkData);
       }
 
-      navigate("/admin/obras");
-    } catch (error) {
-      setError(error.message);
+      navigate("/admin/obras", {
+        replace: true,
+        state: {
+          success: "Los cambios se guardaron correctamente.",
+        },
+      });
+    } catch (err) {
+      setError(err.message);
     } finally {
       setSaving(false);
     }
@@ -161,6 +227,12 @@ function AdminArtworkForm() {
     formData.original_image_url ||
     formData.thumbnail_image_url;
 
+  const displayedImage =
+    previewUrl ||
+    (isEditing && currentImage
+      ? currentImage
+      : imgAdmin);
+
   return (
     <main className="admin-artwork-page">
       <section className="admin-artwork-form-panel">
@@ -192,8 +264,11 @@ function AdminArtworkForm() {
           className="admin-artwork-form"
           onSubmit={handleSubmit}
         >
+          {/* TÍTULO */}
+
           <div className="admin-artwork-field admin-artwork-field-full">
             <label htmlFor="title">Título</label>
+
             <input
               id="title"
               name="title"
@@ -205,9 +280,12 @@ function AdminArtworkForm() {
             />
           </div>
 
+          {/* AÑO Y TÉCNICA */}
+
           <div className="admin-artwork-row">
             <div className="admin-artwork-field">
               <label htmlFor="year">Año</label>
+
               <input
                 id="year"
                 name="year"
@@ -223,6 +301,7 @@ function AdminArtworkForm() {
               <label htmlFor="technique">
                 Técnica
               </label>
+
               <input
                 id="technique"
                 name="technique"
@@ -235,10 +314,13 @@ function AdminArtworkForm() {
             </div>
           </div>
 
+          {/* DIMENSIONES */}
+
           <div className="admin-artwork-field admin-artwork-field-full">
             <label htmlFor="dimensions">
               Dimensiones
             </label>
+
             <input
               id="dimensions"
               name="dimensions"
@@ -249,6 +331,8 @@ function AdminArtworkForm() {
               required
             />
           </div>
+
+          {/* CATEGORÍA */}
 
           <div className="admin-artwork-field admin-artwork-field-full">
             <label htmlFor="category_id">
@@ -271,6 +355,8 @@ function AdminArtworkForm() {
               ))}
             </select>
           </div>
+
+          {/* IMAGEN */}
 
           <div className="admin-artwork-field admin-artwork-field-full">
             <label htmlFor="image">
@@ -296,22 +382,66 @@ function AdminArtworkForm() {
               </strong>
 
               <span>
-                {isEditing
-                  ? "Si no seleccionás otra, se conservará la actual."
-                  : "Elegí la imagen de la obra desde tu computadora."}
+                {newImage
+                  ? "La nueva imagen se muestra en la vista previa."
+                  : isEditing
+                    ? "Si no seleccionás otra, se conservará la actual."
+                    : "Elegí la imagen de la obra desde tu computadora."}
               </span>
             </label>
 
             <input
+              ref={fileInputRef}
               className="admin-artwork-file-input"
               id="image"
               name="image"
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              required={!isEditing}
+              required={!isEditing && !newImage}
             />
+
+            {newImage && (
+              <div
+                style={{
+                  marginTop: "16px",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  gap: "12px",
+                }}
+              >
+                <span
+                  role="status"
+                  style={{
+                    fontSize: "13px",
+                    color: "#303030",
+                  }}
+                >
+                  ✓ Nueva imagen seleccionada
+                </span>
+
+                <button
+                  type="button"
+                  onClick={handleCancelImage}
+                  disabled={saving}
+                  style={{
+                    padding: 0,
+                    background: "none",
+                    border: "none",
+                    color: "#777",
+                    fontSize: "12px",
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancelar selección
+                </button>
+              </div>
+            )}
           </div>
+
+          {/* VISIBILIDAD */}
 
           <label className="admin-artwork-visible">
             <input
@@ -329,11 +459,15 @@ function AdminArtworkForm() {
             </span>
           </label>
 
+          {/* MENSAJES */}
+
           {error && (
-            <p className="admin-artwork-error">
+            <p className="admin-artwork-error" role="alert">
               {error}
             </p>
           )}
+
+          {/* BOTONES */}
 
           <div className="admin-artwork-actions">
             <button
@@ -351,9 +485,7 @@ function AdminArtworkForm() {
             <button
               className="admin-artwork-cancel"
               type="button"
-              onClick={() =>
-                navigate("/admin/obras")
-              }
+              onClick={() => navigate("/admin/obras")}
               disabled={saving}
             >
               Cancelar
@@ -362,17 +494,17 @@ function AdminArtworkForm() {
         </form>
       </section>
 
+      {/* VISTA PREVIA */}
+
       <aside className="admin-artwork-image-panel">
         <img
-          src={
-            isEditing && currentImage
-              ? currentImage
-              : imgAdmin
-          }
+          src={displayedImage}
           alt={
-            isEditing && formData.title
-              ? formData.title
-              : "Obra de Graciela Genovés"
+            previewUrl
+              ? `Vista previa de la nueva imagen: ${formData.title}`
+              : isEditing && formData.title
+                ? formData.title
+                : "Obra de Graciela Genovés"
           }
         />
       </aside>
